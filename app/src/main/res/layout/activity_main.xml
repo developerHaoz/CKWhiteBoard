@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/toolbar_main"
+        />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <ImageView
+            android:id="@+id/main_iv_team_avatar"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
+            android:src="@mipmap/ic_launcher"
+            />
+
+        <TextView
+            android:id="@+id/main_tv_team_name"
+            android:layout_width="200dp"
+            android:layout_height="16dp"
+            android:layout_alignLeft="@+id/main_tv_team_introduce"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/main_tv_team_introduce"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:text="团队名称"
+            android:textSize="14sp"
+            />
+
+
+        <TextView
+            android:id="@+id/main_tv_team_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="16dp"
+            android:layout_below="@+id/main_tv_team_name"
+            android:layout_marginLeft="37dp"
+            android:layout_marginStart="37dp"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/main_iv_team_avatar"
+            android:layout_toRightOf="@+id/main_iv_team_avatar"
+            android:gravity="center_vertical"
+            android:text="团队简介：如果你无法简洁的表达你的想法，那只说明你不够了解它。"
+            android:textSize="14sp"
+            />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/deep_gray"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/main_rv_photo_wall"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_weight="2">
+        </android.support.v7.widget.RecyclerView>
+
+        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+                   android:layout_width="2dp"
+                   android:layout_height="match_parent"
+                   android:layout_alignRight="@id/main_rv_photo_wall"
+                   android:layout_gravity="center"
+                   android:layout_marginBottom="32dp"
+                   android:layout_marginTop="32dp"
+                   android:background="@color/deep_gray"
+            >
+
+        </ImageView>
+
+        <ImageView
+            android:id="@+id/main_iv_great"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="66dp"
+            android:layout_marginRight="66dp"
+            android:src="@mipmap/ic_launcher"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="20dp"
+            android:layout_alignLeft="@+id/main_iv_great"
+            android:layout_alignStart="@+id/main_iv_great"
+            android:layout_below="@+id/main_iv_great"
+            android:layout_marginLeft="13dp"
+            android:layout_marginStart="13dp"
+            android:layout_marginTop="27dp"
+            android:gravity="center"
+            android:text="@string/GREAT"
+            android:textColor="@color/deep_gray"
+            android:textSize="18sp"/>
+    </RelativeLayout>
+
+
+</LinearLayout>

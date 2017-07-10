@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">CKWhiteBoard</string>
+    <string name="GREAT">点个赞吧</string>
+    <string name="TeamName">团队名称</string>
+    <string name="ChangePassword">修改密码</string>
+    <string name="logo">TeamLogo</string>
+    <string name="TeamIntroduce">团队简介</string>
+</resources>
