@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -27,15 +28,16 @@ import butterknife.OnClick;
  */
 
 public class SettingsActivity extends AppCompatActivity {
-
     @BindView(R.id.settings_et_team_name)
     EditText mEtTeamName;
     @BindView(R.id.settings_et_team_introduce)
     EditText mEtTeamIntroduce;
     @BindView(R.id.settings_iv_choose_logo)
-    ImageView mIvTeamLogo;
+    ImageView mIvChooseLogo;
     @BindView(R.id.settings_et_password)
     EditText mEtPassword;
+    @BindView(R.id.settings_iv_team_logo)
+    ImageView mIvTeamLogo;
 
     private static final int REQUEST_CODE_CHOOSE = 1;
 
@@ -61,21 +63,14 @@ public class SettingsActivity extends AppCompatActivity {
                 .thumbnailScale(0.85f)
                 .imageEngine(new GlideEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
-
-//        Matisse.from(SettingsActivity.this)
-//                .choose(MimeType.allOf())
-//                .countable(true)
-//                .maxSelectable(1)
-//                .gridExpectedSize(getResources().getDimensionPixelSize(R.dimen.photo_grid_size))
-//                .thumbnailScale(0.85f)
-//                .imageEngine(new GlideEngine())
-//                .forResult(REQUEST_CODE_CHOOSE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == REQUEST_CODE_CHOOSE){
+        if (requestCode == REQUEST_CODE_CHOOSE) {
+            mIvChooseLogo.setVisibility(View.GONE);
+            mIvTeamLogo.setVisibility(View.VISIBLE);
             Uri imageUri = Matisse.obtainResult(data).get(0);
             Glide.with(SettingsActivity.this)
                     .load(imageUri)
