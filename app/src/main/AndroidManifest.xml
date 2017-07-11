@@ -14,15 +14,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar">
         <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".view.activity.TestActivity">
+        </activity>
+        <activity android:name=".view.activity.SettingsActivity"/>
+        <activity android:name=".view.activity.SignatureActivity"/>
+        <activity android:name=".test.DoodleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.TestActivity"/>
-        <activity android:name=".view.activity.SettingsActivity"/>
-        <activity android:name=".view.activity.SignatureActivity"/>
     </application>
 
 </manifest>

@@ -5,16 +5,52 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.developerhaoz.ckwhiteboard.R;
+import com.example.developerhaoz.ckwhiteboard.view.GraffitiView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
+ * 用于测试 Activity
+ *
  * Created by developerHaoz on 2017/7/10.
  */
 
-public class TestActivity extends AppCompatActivity{
+public class TestActivity extends AppCompatActivity {
+
+    @BindView(R.id.test_graffiti)
+    GraffitiView mGraffiti;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
+        ButterKnife.bind(this);
+
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
