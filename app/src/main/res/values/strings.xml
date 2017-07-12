@@ -9,4 +9,13 @@
     <string name="Paint">画笔</string>
     <string name="Eraser">橡皮</string>
     <string name="Shape">形状</string>
+    <string name="Confirm">确定</string>
+    <string name="ReEvaluate">重签</string>
+    <string name="Evaluation">评语：</string>
+    <string name="TeamIntroduceTem">团队简介：如果你无法简洁的表达你的想法，那只说明你不够了解它。</string>
+    <string name="Encourage">评语：项目很好，继续加油。</string>
+    <string name="Time">2017-07-12 20:14:57</string>
+    <string name="ChooseEvaluation">选择评语：</string>
+    <string name="Ok">项目很好，继续加油</string>
+    <string name="InputTeamName">请输入团队名称</string>
 </resources>

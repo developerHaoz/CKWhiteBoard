@@ -5,11 +5,16 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -179,12 +184,49 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
         return bmp;
     }
 
+    /**
+     * 保存涂鸦后的图片
+     *
+     * @param doodle
+     * @return
+     */
+    public String saveBitmap(Doodle doodle){
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + "/doodle/" + System.currentTimeMillis() + ".png";
+        if (!new File(path).exists()) {
+            new File(path).getParentFile().mkdir();
+        }
+        savePicByPNG(doodle.getBitmap(), path);
+        return path;
+    }
+
     public void doDraw(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);
         for (Action a : mActions) {
             a.draw(canvas);
         }
         canvas.drawBitmap(bmp, 0, 0, mPaint);
+    }
+
+    /**
+     * 将一个 Bitmap 保存在指定的路径中
+     *
+     * @param b
+     * @param filePath
+     */
+    public static void savePicByPNG(Bitmap b, String filePath) {
+        FileOutputStream fos;
+        try {
+            fos = new FileOutputStream(filePath);
+            if (null != fos) {
+                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                fos.flush();
+                fos.close();
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -203,6 +245,21 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 重置签名
+     */
+    public void reset(){
+        if(mActions != null && mActions.size() > 0){
+            mActions.clear();
+            Canvas canvas = mSurfaceHolder.lockCanvas();
+            canvas.drawColor(Color.WHITE);
+            for (Action action : mActions) {
+                action.draw(canvas);
+            }
+            mSurfaceHolder.unlockCanvasAndPost(canvas);
+        }
     }
 
      enum ActionType {

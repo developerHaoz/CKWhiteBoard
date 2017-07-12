@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
+import com.example.developerhaoz.ckwhiteboard.common.util.TeamManager;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SettingsActivity;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SignatureActivity;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.MainAdapter;
@@ -56,6 +58,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initiView();
+    }
+
+    /**
+     * 初始化界面
+     */
+    private void initiView() {
+        TeamManager teamManager = TeamManager.getInstance(this);
+        String teamName= teamManager.getTeamName();
+        String teamIntroduce = teamManager.getTeamIntroduce();
+        String teamLogoUrl = teamManager.getTeamLogoUrl();
+
+        mTvTeamName.setText(teamName);
+        mTvTeamIntroduce.setText(teamIntroduce);
+        CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
+
         mPhotoUrlList = new ArrayList<>();
         initPhotoUrlList();
         mRvPhotoWall.setLayoutManager(new GridLayoutManager(this, 3));

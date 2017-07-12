@@ -16,7 +16,7 @@
         android:paddingLeft="16dp"
         android:paddingRight="16dp"
         android:paddingTop="12dp"
-        android:text="选择评语："
+        android:text="@string/ChooseEvaluation"
         />
 
     <TextView
@@ -30,7 +30,7 @@
         android:background="@drawable/app_button"
         android:drawableRight="@mipmap/ic_launcher"
         android:gravity="center_vertical"
-        android:text="项目很好，继续加油"
+        android:text="@string/Ok"
         />
 
     <TextView
@@ -46,7 +46,48 @@
     <com.example.developerhaoz.ckwhiteboard.test.Doodle
         android:id="@+id/signature_doodle"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:paddingBottom="4dp"
+        android:background="@color/white"
+        >
+
+        <Button
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_marginRight="25dp"
+            android:layout_marginEnd="25dp"
+            android:id="@+id/signature_btn_reevaluate"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:text="@string/ReEvaluate"
+            android:background="@drawable/shape_button_reevaluate"
+            android:textColor="@color/white"
+            />
+
+        <Button
+            android:id="@+id/signature_btn_confirm"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/signature_btn_reevaluate"
+            android:layout_toStartOf="@+id/signature_btn_reevaluate"
+            android:layout_marginRight="14dp"
+            android:layout_marginEnd="14dp"
+            android:text="@string/Confirm"
+            android:background="@drawable/shape_button_confirm"
+            android:textColor="@color/white"
+            />
+
+    </RelativeLayout>
 
 </LinearLayout>
 

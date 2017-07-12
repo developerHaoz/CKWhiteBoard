@@ -2,7 +2,6 @@ package com.example.developerhaoz.ckwhiteboard.test;
 
 import android.app.Activity;
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
@@ -15,9 +14,6 @@ import android.widget.Toast;
 import com.example.developerhaoz.ckwhiteboard.R;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 
 /**
  * 用于测试涂鸦的 Activity
@@ -190,7 +186,7 @@ public class DoodleActivity extends Activity implements View.OnClickListener {
             if (!new File(path).exists()) {
                 new File(path).getParentFile().mkdir();
             }
-            savePicByPNG(mDoodle.getBitmap(), path);
+            Doodle.savePicByPNG(mDoodle.getBitmap(), path);
             Toast.makeText(this, "图片保存成功，路径为" + path, Toast.LENGTH_LONG).show();
         }
         return true;
@@ -203,22 +199,4 @@ public class DoodleActivity extends Activity implements View.OnClickListener {
         }
     }
 
-    public static void savePicByPNG(Bitmap b, String filePath) {
-        FileOutputStream fos;
-        try {
-//			if (!new File(filePath).exists()) {
-//				new File(filePath).createNewFile();
-//			}
-            fos = new FileOutputStream(filePath);
-            if (null != fos) {
-                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
-                fos.flush();
-                fos.close();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

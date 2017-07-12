@@ -30,6 +30,8 @@
 
         <activity android:name=".test.DoodleActivity">
         </activity>
+
+        <activity android:name=".view.activity.PreviewActivity"/>
     </application>
 
 </manifest>
