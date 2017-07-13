@@ -3,39 +3,41 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical"
-              android:background="@color/gray_light"
+              android:background="@color/settings_background"
     >
 
     <include layout="@layout/part_toolbar"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="36dp"
         android:gravity="center_vertical"
-        android:paddingBottom="12dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="12dp"
+        android:paddingBottom="8dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:paddingTop="4dp"
         android:text="@string/ChooseEvaluation"
+        android:textSize="12sp"
         />
 
     <TextView
         android:id="@+id/signature_tv_evaluation"
-        android:layout_marginLeft="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginRight="20dp"
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
         android:background="@drawable/app_button"
-        android:drawableRight="@mipmap/ic_launcher"
+        android:drawablePadding="5dp"
         android:gravity="center_vertical"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
         android:text="@string/Ok"
+        android:textSize="12sp"
         />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="36dp"/>
+        android:layout_height="24dp"/>
 
     <ImageView
         android:layout_width="match_parent"
@@ -52,40 +54,43 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:paddingBottom="4dp"
+        android:layout_height="32dp"
         android:background="@color/white"
+        android:paddingBottom="8dp"
         >
 
         <Button
-            android:layout_width="48dp"
-            android:layout_height="24dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_marginRight="25dp"
-            android:layout_marginEnd="25dp"
             android:id="@+id/signature_btn_reevaluate"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:text="@string/ReEvaluate"
+            android:layout_width="36dp"
+            android:layout_height="16dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/shape_button_reevaluate"
+            android:src="@mipmap/ic_launcher"
+            android:text="@string/ReEvaluate"
             android:textColor="@color/white"
-            />
+            android:textSize="12sp"
+            android:layout_alignBottom="@+id/signature_btn_confirm"
+            android:layout_toLeftOf="@+id/signature_btn_confirm"
+            android:layout_toStartOf="@+id/signature_btn_confirm"
+            android:layout_alignTop="@+id/signature_btn_confirm"/>
 
         <Button
             android:id="@+id/signature_btn_confirm"
-            android:layout_width="48dp"
-            android:layout_height="24dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/signature_btn_reevaluate"
-            android:layout_toStartOf="@+id/signature_btn_reevaluate"
-            android:layout_marginRight="14dp"
-            android:layout_marginEnd="14dp"
-            android:text="@string/Confirm"
+            android:layout_width="36dp"
+            android:layout_height="16dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
             android:background="@drawable/shape_button_confirm"
+            android:src="@mipmap/ic_launcher"
+            android:text="@string/Confirm"
             android:textColor="@color/white"
+            android:textSize="12sp"
             />
+
 
     </RelativeLayout>
 

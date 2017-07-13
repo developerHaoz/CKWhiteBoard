@@ -5,9 +5,12 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="tab_text_unselected">#828990</color>
+    <color name="toolbar">#f8f8f8</color>
 
     <color name="app_main_color">#3F51B5</color>
     <color name="app_main_color_deep">#303F9F</color>
+    <color name="settings_background">#f0f0f2</color>
+
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -35,4 +38,7 @@
     <color name="half_transparent_black">#7a000000</color>
     <color name="half_transparent_white">#7affffff</color>
     <color name="card_transparent_white">#ccffffff</color>
+
+    <color name="encourage_text">#ceccd3</color>
+
 </resources>

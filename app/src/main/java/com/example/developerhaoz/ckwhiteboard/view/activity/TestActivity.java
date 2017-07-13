@@ -5,9 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.developerhaoz.ckwhiteboard.R;
-import com.example.developerhaoz.ckwhiteboard.view.GraffitiView;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -18,8 +16,6 @@ import butterknife.ButterKnife;
 
 public class TestActivity extends AppCompatActivity {
 
-    @BindView(R.id.test_graffiti)
-    GraffitiView mGraffiti;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

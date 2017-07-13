@@ -1,32 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="24dp"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:orientation="horizontal"
-                android:padding="2dp"
+                android:paddingTop="4dp"
+                android:paddingLeft="2dp"
+                android:paddingStart="2dp"
+                android:paddingRight="2dp"
+                app:paddingEnd="2dp"
+                android:background="@color/toolbar"
     >
 
     <ImageView
+        android:contentDescription="@string/SelectedImage"
         android:id="@+id/main_iv_photo"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/img"
+        android:layout_marginRight="24dp"
+        android:layout_marginEnd="24dp"
+        android:foregroundGravity="center_vertical"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/main_iv_settings"
-        android:layout_toStartOf="@+id/main_iv_settings"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_toStartOf="@+id/main_iv_settings"/>
 
     <ImageView
+        android:contentDescription="@string/Settings"
         android:id="@+id/main_iv_settings"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/settings"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_marginEnd="10dp"
+        android:foregroundGravity="center_vertical"
+        />
+
+    <ImageView
+        android:contentDescription="@string/AppDivide"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/deep_gray"
+        android:id="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
 
 
 </RelativeLayout>

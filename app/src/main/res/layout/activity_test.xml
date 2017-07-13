@@ -5,9 +5,6 @@
               android:orientation="vertical"
     >
 
-    <com.example.developerhaoz.ckwhiteboard.view.GraffitiView
-        android:id="@+id/test_graffiti"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+
 
 </LinearLayout>

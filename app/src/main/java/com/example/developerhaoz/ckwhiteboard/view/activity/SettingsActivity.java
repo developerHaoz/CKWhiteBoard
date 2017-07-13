@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.developerhaoz.ckwhiteboard.MainActivity;
 import com.example.developerhaoz.ckwhiteboard.R;
+import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
+import com.example.developerhaoz.ckwhiteboard.common.util.Check;
 import com.example.developerhaoz.ckwhiteboard.common.util.TeamManager;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -36,8 +38,6 @@ public class SettingsActivity extends AppCompatActivity {
     EditText mEtTeamName;
     @BindView(R.id.settings_et_team_introduce)
     EditText mEtTeamIntroduce;
-    @BindView(R.id.settings_iv_choose_logo)
-    ImageView mIvChooseLogo;
     @BindView(R.id.settings_et_password)
     EditText mEtPassword;
     @BindView(R.id.settings_iv_team_logo)
@@ -62,9 +62,27 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
-        mIvConfirm.setVisibility(View.VISIBLE);
         teamManager = TeamManager.getInstance(this);
+        initView();
+    }
 
+    /**
+     * 初始化界面
+     */
+    private void initView() {
+        mIvConfirm.setVisibility(View.VISIBLE);
+        String teamName = teamManager.getTeamName();
+        String teamIntroduce = teamManager.getTeamIntroduce();
+        String teamLogoUrl = teamManager.getTeamLogoUrl();
+        String teamPassword = teamManager.getTeamPassword();
+
+        mEtTeamName.setText(teamName);
+        mEtTeamIntroduce.setText(teamIntroduce);
+        mEtPassword.setText(teamPassword);
+
+        if(!Check.isEmpty(teamLogoUrl)){
+            CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamLogo);
+        }
     }
 
     /**
@@ -84,8 +102,6 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE) {
-            mIvChooseLogo.setVisibility(View.GONE);
-            mIvTeamLogo.setVisibility(View.VISIBLE);
             Uri imageUri = Matisse.obtainResult(data).get(0);
             Glide.with(SettingsActivity.this)
                     .load(imageUri)
@@ -94,7 +110,7 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.toolbar_iv_back, R.id.toolbar_iv_confirm, R.id.settings_iv_choose_logo})
+    @OnClick({R.id.toolbar_iv_back, R.id.toolbar_iv_confirm, R.id.settings_iv_team_logo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_iv_back:
@@ -106,7 +122,7 @@ public class SettingsActivity extends AppCompatActivity {
                 finish();
                 MainActivity.startActivity(this);
                 break;
-            case R.id.settings_iv_choose_logo:
+            case R.id.settings_iv_team_logo:
                 Matisse.from(SettingsActivity.this)
                         .choose(MimeType.allOf())
                         .countable(true)

@@ -1,17 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="36dp"
+              android:layout_height="24dp"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
-              android:paddingLeft="16dp"
+              android:paddingLeft="8dp"
+              android:paddingStart="8dp"
               android:paddingRight="16dp"
+              android:paddingEnd="16dp"
+              android:background="@color/toolbar"
     >
 
     <ImageView
+        android:contentDescription="@string/Back"
         android:id="@+id/toolbar_iv_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@drawable/back"
+        android:layout_gravity="center_vertical"
         />
 
     <TextView
@@ -21,12 +27,13 @@
         />
 
     <ImageView
+        android:contentDescription="@string/Confirm"
         android:id="@+id/toolbar_iv_confirm"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@mipmap/ic_launcher"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/confirm"
         android:visibility="gone"
+        android:layout_gravity="center_vertical"
         />
-
 
 </LinearLayout>

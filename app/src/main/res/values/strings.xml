@@ -3,8 +3,8 @@
     <string name="GREAT">点个赞吧</string>
     <string name="TeamName">团队名称</string>
     <string name="ChangePassword">修改密码</string>
-    <string name="logo">TeamLogo</string>
-    <string name="TeamIntroduce">团队简介</string>
+    <string name="logo">团队 Logo</string>
+    <string name="TeamIntroduce">团队简介: </string>
     <string name="Color">颜色</string>
     <string name="Paint">画笔</string>
     <string name="Eraser">橡皮</string>
@@ -12,10 +12,20 @@
     <string name="Confirm">确定</string>
     <string name="ReEvaluate">重签</string>
     <string name="Evaluation">评语：</string>
-    <string name="TeamIntroduceTem">团队简介：如果你无法简洁的表达你的想法，那只说明你不够了解它。</string>
+    <string name="TeamIntroduceTemp">团队简介：如果你无法简洁的表达你的想法，那只说明你不够了解它。</string>
     <string name="Encourage">评语：项目很好，继续加油。</string>
     <string name="Time">2017-07-12 20:14:57</string>
     <string name="ChooseEvaluation">选择评语：</string>
     <string name="Ok">项目很好，继续加油</string>
     <string name="InputTeamName">请输入团队名称</string>
+    <string name="Preview">预览</string>
+    <string name="Photo">主界面照片墙的照片</string>
+    <string name="AppDivide">APP 的分割线</string>
+    <string name="Back">返回</string>
+    <string name="Like">点赞</string>
+    <string name="TeamAvatar">团队头像</string>
+    <string name="Signature">签名</string>
+    <string name="SelectedImage">选择图片</string>
+    <string name="Settings">设置</string>
+    <string name="Time_5S">5 S</string>
 </resources>

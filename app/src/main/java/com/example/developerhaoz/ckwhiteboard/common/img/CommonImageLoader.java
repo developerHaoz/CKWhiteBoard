@@ -1,7 +1,5 @@
 package com.example.developerhaoz.ckwhiteboard.common.img;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,7 +18,8 @@ public class CommonImageLoader {
 
     /**
      * 使用单例模式，节省资源
-     * @return
+     *
+     * @return CommonImageLoader
      */
     public static CommonImageLoader getInstance(){
         if(INSTANCE == null){
@@ -45,64 +44,11 @@ public class CommonImageLoader {
                 .error(R.mipmap.ic_launcher_round)
                 .placeholder(R.mipmap.ic_launcher_round)
                 .dontAnimate()
+                .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(imageView);
     }
 
-//    /**
-//     * 传入图片的 Url，并将 Bitmap 进行回调
-//     *
-//     * @param context
-//     * @param url
-//     * @param listener
-//     */
-//    public void loadImage(Context context, String url, final GetImageListener listener){
-//        GlideApp.with(context)
-//                .asBitmap()
-//                .load(url)
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-//                        listener.onSuccess(bitmap);
-//                    }
-//
-//                    @Override
-//                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-//                        super.onLoadFailed(errorDrawable);
-//                        listener.onError(errorDrawable);
-//                    }
-//                });
-//    }
-
-//    /**
-//     * 传入图片的 Url，并将 Bitmap 进行回调
-//     *
-//     * @param fragment
-//     * @param url
-//     * @param listener
-//     */
-//    public void loadImage(Fragment fragment, String url, final GetImageListener listener){
-//        GlideApp.with(fragment)
-//                .asBitmap()
-//                .load(url)
-//                .into(new SimpleTarget<Bitmap>() {
-//                    @Override
-//                    public void onResourceReady(Bitmap bitmap, Transition<? super Bitmap> transition) {
-//                        listener.onSuccess(bitmap);
-//                    }
-//
-//                    @Override
-//                    public void onLoadFailed(@Nullable Drawable errorDrawable) {
-//                        super.onLoadFailed(errorDrawable);
-//                        listener.onError(errorDrawable);
-//                    }
-//                });
-//    }
-
-    public interface GetImageListener{
-        void onSuccess(Bitmap bitmap);
-        void onError(Drawable errorDrawable);
-    }
 }
 
 

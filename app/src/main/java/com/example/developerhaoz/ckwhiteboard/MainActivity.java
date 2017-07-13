@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
+import com.example.developerhaoz.ckwhiteboard.common.util.Check;
 import com.example.developerhaoz.ckwhiteboard.common.util.TeamManager;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SettingsActivity;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SignatureActivity;
@@ -29,6 +30,7 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_CHOOSE = 1;
 
     @BindView(R.id.main_iv_team_avatar)
@@ -58,20 +60,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        initiView();
+        initView();
     }
 
     /**
      * 初始化界面
      */
-    private void initiView() {
+    private void initView() {
+
         TeamManager teamManager = TeamManager.getInstance(this);
         String teamName= teamManager.getTeamName();
-        String teamIntroduce = teamManager.getTeamIntroduce();
+        String teamIntroduce = "团队简介：" + teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
 
-        mTvTeamName.setText(teamName);
-        mTvTeamIntroduce.setText(teamIntroduce);
+        if(Check.isEmpty(teamName)){
+            mTvTeamName.setText(R.string.TeamName);
+        }else {
+            mTvTeamName.setText(teamName);
+        }
+
+        if(Check.isEmpty(teamIntroduce)){
+            mTvTeamIntroduce.setText(R.string.TeamIntroduceTemp);
+        }else {
+            mTvTeamIntroduce.setText(teamIntroduce);
+        }
+
         CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
 
         mPhotoUrlList = new ArrayList<>();
@@ -82,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPhotoUrlList() {
 
-        String imageUrl = "http://ww3.sinaimg.cn/large/7a8aed7bgw1eswencfur6j20hq0qodhs.jpg";
+        String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
         for (int i = 0; i < 15; i++) {
             mPhotoUrlList.add(imageUrl);
         }

@@ -1,19 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/settings_background"
+              android:orientation="vertical"
+    >
+
+    <include layout="@layout/part_preview_toolbar"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingEnd="2dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="2dp"
+        android:paddingStart="20dp"
+        android:paddingTop="6dp"
         >
 
         <ImageView
             android:id="@+id/preview_iv_team_avatar"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:contentDescription="@string/TeamAvatar"
             android:src="@mipmap/ic_launcher"
             />
 
@@ -21,58 +31,67 @@
             android:id="@+id/preview_tv_team_name"
             android:layout_width="200dp"
             android:layout_height="16dp"
-            android:layout_marginTop="18dp"
+            android:layout_alignLeft="@+id/preview_tv_team_introduce"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/preview_tv_team_introduce"
+            android:layout_marginTop="2dp"
             android:gravity="center_vertical"
             android:text="@string/TeamName"
-            android:textSize="14sp"
-            android:layout_alignParentTop="true"
-            android:layout_alignLeft="@+id/preview_tv_team_introduce"
-            android:layout_alignStart="@+id/preview_tv_team_introduce"/>
+            android:textSize="12sp"/>
 
 
         <TextView
             android:id="@+id/preview_tv_team_introduce"
             android:layout_width="match_parent"
             android:layout_height="16dp"
-            android:gravity="center_vertical"
-            android:text="@string/TeamIntroduceTem"
-            android:textSize="14sp"
             android:layout_below="@+id/preview_tv_team_name"
-            android:layout_toRightOf="@+id/preview_iv_team_avatar"
-            android:layout_toEndOf="@+id/preview_iv_team_avatar"
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
-            android:layout_marginTop="24dp"/>
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@+id/preview_iv_team_avatar"
+            android:layout_toRightOf="@+id/preview_iv_team_avatar"
+            android:gravity="center_vertical"
+            android:text="@string/TeamIntroduceTemp"
+            android:textSize="12sp"/>
     </RelativeLayout>
 
     <TextView
         android:id="@+id/preview_tv_evaluation"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
         android:paddingLeft="20dp"
-        android:paddingStart="20dp"
-        android:paddingTop="32dp"
         android:paddingRight="10dp"
-        app:paddingEnd="10dp"
+        android:paddingStart="20dp"
+        android:paddingTop="16dp"
         android:text="@string/Encourage"
+        android:textSize="12sp"
+        android:paddingEnd="10dp"
         />
 
     <ImageView
+        android:contentDescription="@string/Signature"
         android:id="@+id/preview_iv_signature"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginLeft="120dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="1"
         />
 
     <TextView
         android:id="@+id/preview_tv_time"
-        android:paddingLeft="20dp"
-        android:paddingStart="20dp"
-        android:paddingRight="20dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="24dp"
         android:layout_width="match_parent"
         android:layout_height="48dp"
+        android:paddingBottom="24dp"
+        android:paddingEnd="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:paddingStart="20dp"
         android:text="@string/Time"
+        android:textSize="12sp"
         />
 </LinearLayout>

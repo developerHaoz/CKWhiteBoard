@@ -38,9 +38,12 @@ public class PreviewActivity extends AppCompatActivity {
     ImageView mIvSignature;
     @BindView(R.id.preview_tv_time)
     TextView mTvTime;
+    @BindView(R.id.preview_tv_count_down)
+    TextView mTvCountDown;
 
     private static final String KEY_IMAGE_URL = "imageUrl";
     private static final String KEY_EVALUATION = "evaluation";
+
 
     public static void startActivity(String imageUrl, String evaluation, Context context) {
         Intent intent = new Intent(context, PreviewActivity.class);
@@ -64,17 +67,19 @@ public class PreviewActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(KEY_IMAGE_URL);
-        String evaluation = intent.getStringExtra(KEY_EVALUATION);
-        mTvEvaluation.setText(R.string.Evaluation + evaluation);
+        String evaluation = "评语：" + intent.getStringExtra(KEY_EVALUATION);
         CommonImageLoader.getInstance().displayImage(imageUrl, mIvSignature);
+        mTvEvaluation.setText(evaluation);
 
         // 初始化团队信息
         TeamManager teamManager = TeamManager.getInstance(this);
         String teamName = teamManager.getTeamName();
-        String teamIntroduce = teamManager.getTeamIntroduce();
+        String teamIntroduce = "团队简介：" + teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
         mTvTeamName.setText(teamName);
-        mTvEvaluation.setText(teamIntroduce);
+
+        mTvTeamIntroduce.setText(teamIntroduce);
+        mTvEvaluation.setText(evaluation);
         CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
 
         // 初始化时间
