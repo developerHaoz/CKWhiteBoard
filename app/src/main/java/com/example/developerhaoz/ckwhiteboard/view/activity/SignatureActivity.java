@@ -84,13 +84,21 @@ public class SignatureActivity extends AppCompatActivity {
                 mDoodle.reset();
                 break;
             case R.id.signature_btn_confirm:
-                String path = mDoodle.saveBitmap(mDoodle);
-                String evaluation = mTvEvaluation.getText().toString();
-                PreviewActivity.startActivity(path, evaluation, SignatureActivity.this);
+                doConfirm();
                 break;
             default:
                 break;
         }
+    }
+
+    /**
+     * 确定保存图片
+     */
+    private void doConfirm() {
+        String path = mDoodle.saveBitmap(mDoodle);
+        Toast.makeText(this, path, Toast.LENGTH_SHORT).show();
+        String evaluation = mTvEvaluation.getText().toString();
+        PreviewActivity.startActivity(path, evaluation, SignatureActivity.this);
     }
 
     /**

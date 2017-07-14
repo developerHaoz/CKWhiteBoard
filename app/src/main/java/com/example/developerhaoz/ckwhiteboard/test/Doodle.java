@@ -11,10 +11,9 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.developerhaoz.ckwhiteboard.common.util.SavePictureUtil;
+
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,7 +98,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                setCurAction(touchX, touchY);
+                setCurAction(touchX, touchY - 200);
                 break;
             case MotionEvent.ACTION_MOVE:
                 Canvas canvas = mSurfaceHolder.lockCanvas();
@@ -107,7 +106,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
                 for (Action a : mActions) {
                     a.draw(canvas);
                 }
-                curAction.move(touchX, touchY);
+                curAction.move(touchX, touchY - 200);
                 curAction.draw(canvas);
                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                 break;
@@ -195,7 +194,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
         if (!new File(path).exists()) {
             new File(path).getParentFile().mkdir();
         }
-        savePicByPNG(doodle.getBitmap(), path);
+        SavePictureUtil.savePicByPNG(doodle.getBitmap(), path);
         return path;
     }
 
@@ -205,28 +204,6 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
             a.draw(canvas);
         }
         canvas.drawBitmap(bmp, 0, 0, mPaint);
-    }
-
-    /**
-     * 将一个 Bitmap 保存在指定的路径中
-     *
-     * @param b
-     * @param filePath
-     */
-    public static void savePicByPNG(Bitmap b, String filePath) {
-        FileOutputStream fos;
-        try {
-            fos = new FileOutputStream(filePath);
-            if (null != fos) {
-                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
-                fos.flush();
-                fos.close();
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -267,3 +244,15 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

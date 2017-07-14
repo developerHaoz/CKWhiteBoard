@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
+import com.example.developerhaoz.ckwhiteboard.common.util.SavePictureUtil;
 
 import java.io.File;
 
@@ -186,7 +187,7 @@ public class DoodleActivity extends Activity implements View.OnClickListener {
             if (!new File(path).exists()) {
                 new File(path).getParentFile().mkdir();
             }
-            Doodle.savePicByPNG(mDoodle.getBitmap(), path);
+            SavePictureUtil.savePicByPNG(mDoodle.getBitmap(), path);
             Toast.makeText(this, "图片保存成功，路径为" + path, Toast.LENGTH_LONG).show();
         }
         return true;

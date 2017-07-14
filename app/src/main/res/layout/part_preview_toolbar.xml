@@ -3,6 +3,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="24dp"
                 android:background="@color/toolbar"
+                android:id="@+id/preview_toolbar"
     >
 
     <TextView

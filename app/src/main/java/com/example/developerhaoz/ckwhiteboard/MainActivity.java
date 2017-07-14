@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         TeamManager teamManager = TeamManager.getInstance(this);
         String teamName= teamManager.getTeamName();
-        String teamIntroduce = "团队简介：" + teamManager.getTeamIntroduce();
+        String teamIntroduce = teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
 
         if(Check.isEmpty(teamName)){
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if(Check.isEmpty(teamIntroduce)){
             mTvTeamIntroduce.setText(R.string.TeamIntroduceTemp);
         }else {
-            mTvTeamIntroduce.setText(teamIntroduce);
+            mTvTeamIntroduce.setText("团队简介：" + teamIntroduce);
         }
 
         CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
@@ -95,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPhotoUrlList() {
 
-        String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
+        String imageUrl = "/storage/emulated/0/doodleview/1500007762515.png";
+//        String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
         for (int i = 0; i < 15; i++) {
             mPhotoUrlList.add(imageUrl);
         }

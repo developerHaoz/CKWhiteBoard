@@ -2,14 +2,21 @@ package com.example.developerhaoz.ckwhiteboard.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
+import com.example.developerhaoz.ckwhiteboard.common.util.SavePictureUtil;
 import com.example.developerhaoz.ckwhiteboard.common.util.TeamManager;
 
 import java.text.SimpleDateFormat;
@@ -17,6 +24,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * 用于预览所生成图片的 Activity
@@ -26,6 +34,10 @@ import butterknife.ButterKnife;
 
 public class PreviewActivity extends AppCompatActivity {
 
+    private static final String TAG = "PreviewActivity";
+
+    @BindView(R.id.preview_ll)
+    LinearLayout mLl;
     @BindView(R.id.preview_iv_team_avatar)
     ImageView mIvTeamAvatar;
     @BindView(R.id.preview_tv_team_name)
@@ -43,6 +55,8 @@ public class PreviewActivity extends AppCompatActivity {
 
     private static final String KEY_IMAGE_URL = "imageUrl";
     private static final String KEY_EVALUATION = "evaluation";
+    @BindView(R.id.preview_toolbar)
+    RelativeLayout mToolbar;
 
 
     public static void startActivity(String imageUrl, String evaluation, Context context) {
@@ -88,6 +102,20 @@ public class PreviewActivity extends AppCompatActivity {
         mTvTime.setText(dateString);
     }
 
+    private static final String PATH_SAVE_PICUTRE = "/signaturePath/";
+
+
+    @OnClick(R.id.preview_tv_count_down)
+    public void onViewClicked() {
+        mToolbar.setVisibility(View.GONE);
+        Bitmap bitmap = Bitmap.createBitmap(getResources().getDisplayMetrics().widthPixels
+                , getResources().getDisplayMetrics().heightPixels, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        mLl.draw(canvas);
+        String path = Environment.getExternalStorageDirectory().getAbsolutePath() + PATH_SAVE_PICUTRE
+                + System.currentTimeMillis() + ".png";
+        SavePictureUtil.savePicByPNG(bitmap, path);
+    }
 }
 
 
