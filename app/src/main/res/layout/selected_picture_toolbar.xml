@@ -8,7 +8,7 @@
     >
 
     <ImageView
-        android:id="@+id/main_iv_back"
+        android:id="@+id/selected_picture_iv_back"
         android:contentDescription="@string/Back"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -16,34 +16,33 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
-        android:visibility="gone"
         />
 
     <ImageView
-        android:id="@+id/main_iv_photo"
+        android:id="@+id/selected_picture_iv_import"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:layout_marginRight="24dp"
-        android:layout_toLeftOf="@+id/main_iv_settings"
-        android:layout_toStartOf="@+id/main_iv_settings"
+        android:layout_marginEnd="27dp"
+        android:layout_marginRight="27dp"
         android:contentDescription="@string/SelectedImage"
         android:foregroundGravity="center_vertical"
-        android:src="@drawable/img"/>
+        android:src="@drawable/import_picture"
+        android:layout_alignTop="@+id/selected_picture_iv_back"
+        android:layout_toLeftOf="@+id/selected_picture_iv_export"
+        android:layout_toStartOf="@+id/selected_picture_iv_export"/>
 
     <ImageView
-        android:id="@+id/main_iv_settings"
+        android:id="@+id/selected_picture_iv_export"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/main_iv_photo"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:contentDescription="@string/Settings"
         android:foregroundGravity="center_vertical"
-        android:src="@drawable/settings"/>
+        android:src="@drawable/export_picture"
+        android:layout_alignTop="@+id/selected_picture_iv_import"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
 
     <ImageView
         android:id="@+id/imageView"

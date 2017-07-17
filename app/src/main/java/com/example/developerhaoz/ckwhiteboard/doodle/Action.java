@@ -1,4 +1,4 @@
-package com.example.developerhaoz.ckwhiteboard.test;
+package com.example.developerhaoz.ckwhiteboard.doodle;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -6,7 +6,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 
 /**
- * 动作的基础类
+ * 涂鸦动作的基础类
  * <p>
  * Created by developerHaoz on 2017/7/11.
  */

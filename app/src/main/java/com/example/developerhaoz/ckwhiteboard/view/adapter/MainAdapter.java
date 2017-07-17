@@ -1,5 +1,6 @@
 package com.example.developerhaoz.ckwhiteboard.view.adapter;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,30 +10,44 @@ import android.widget.ImageView;
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
 import com.example.developerhaoz.ckwhiteboard.common.util.Check;
+import com.example.developerhaoz.ckwhiteboard.view.activity.DetailPhotoActivity;
 
+import java.lang.ref.WeakReference;
 import java.util.List;
 
 /**
+ * 主界面的 Adapter
+ *
  * Created by developerHaoz on 2017/7/10.
  */
 
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder> {
 
     private List<String> mPhotoUrlList;
+    private WeakReference<Activity> mWeakReference;
 
-    public MainAdapter(List<String> photoUrlList) {
+    public MainAdapter(List<String> photoUrlList, Activity activity) {
         mPhotoUrlList = photoUrlList;
+        mWeakReference = new WeakReference<>(activity);
     }
 
     @Override
     public MainViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_photo, null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_rv_photo, null);
         return new MainViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(MainViewHolder holder, int position) {
-        CommonImageLoader.getInstance().displayImage(mPhotoUrlList.get(position), holder.mIvPhoto);
+        final String imageUrl = mPhotoUrlList.get(position);
+        CommonImageLoader.getInstance().displayImage(imageUrl, holder.mIvPhoto);
+        holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Activity activity = mWeakReference.get();
+                DetailPhotoActivity.startActivity(imageUrl, activity);
+            }
+        });
     }
 
     @Override
@@ -47,9 +62,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.MainViewHolder
 
         private ImageView mIvPhoto;
 
-        public MainViewHolder(View itemView) {
+         MainViewHolder(View itemView) {
             super(itemView);
             mIvPhoto = (ImageView) itemView.findViewById(R.id.item_main_photo);
         }
     }
+
 }

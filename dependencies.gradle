@@ -18,10 +18,10 @@ project.ext {
             "logger"               : 'com.orhanobut:logger:2.1.1',
             "okhttp"               : 'com.squareup.okhttp3:okhttp:3.8.1',
             "design"               : 'com.android.support:design:25.3.1',
-//            "glide"                : 'com.github.bumptech.glide:glide:4.0.0-RC1',
-//            "glide-compiler"      : 'com.github.bumptech.glide:compiler:4.0.0-RC1',
             "glide"                : 'com.github.bumptech.glide:glide:3.7.0',
             "litepal"              : 'org.litepal.android:core:1.5.1',
-            "matisse"              : 'com.zhihu.android:matisse:0.4.3'
+            "matisse"              : 'com.zhihu.android:matisse:0.4.3',
+            "photoview"            : 'com.github.chrisbanes:PhotoView:1.2.6',
+            "circleview"           : 'de.hdodenhof:circleimageview:2.1.0'
     ]
 }

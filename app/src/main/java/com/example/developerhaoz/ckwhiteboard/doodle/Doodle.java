@@ -1,4 +1,4 @@
-package com.example.developerhaoz.ckwhiteboard.test;
+package com.example.developerhaoz.ckwhiteboard.doodle;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -98,7 +98,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                setCurAction(touchX, touchY - 200);
+                setCurAction(touchX, touchY - 320);
                 break;
             case MotionEvent.ACTION_MOVE:
                 Canvas canvas = mSurfaceHolder.lockCanvas();
@@ -106,7 +106,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
                 for (Action a : mActions) {
                     a.draw(canvas);
                 }
-                curAction.move(touchX, touchY - 200);
+                curAction.move(touchX, touchY - 320);
                 curAction.draw(canvas);
                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                 break;
@@ -174,7 +174,8 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * 获取画布的截图
-     * @return
+     *
+     * @return Bitmap
      */
     public Bitmap getBitmap() {
         bmp = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
@@ -186,7 +187,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
     /**
      * 保存涂鸦后的图片
      *
-     * @param doodle
+     * @param doodle Doodle 的实例
      * @return
      */
     public String saveBitmap(Doodle doodle){
@@ -208,7 +209,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
     /**
      * 回退
-     * @return
+     * @return 是否回退成功
      */
     public boolean back() {
         if (mActions != null && mActions.size() > 0) {

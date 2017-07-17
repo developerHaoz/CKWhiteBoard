@@ -36,12 +36,12 @@ dependencies {
     compile rootProject.ext.dependencies["butterknife"]
     annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
     compile rootProject.ext.dependencies["eventbus"]
-    compile rootProject.ext.dependencies["gson"]
     compile rootProject.ext.dependencies["logger"]
-    compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["glide"]
     compile rootProject.ext.dependencies["litepal"]
     compile rootProject.ext.dependencies["matisse"]
+    compile rootProject.ext.dependencies["photoview"]
+    compile rootProject.ext.dependencies["circleview"]
     testCompile 'junit:junit:4.12'
 }

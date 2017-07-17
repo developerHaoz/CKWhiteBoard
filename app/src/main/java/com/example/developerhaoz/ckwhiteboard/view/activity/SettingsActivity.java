@@ -28,7 +28,7 @@ import butterknife.OnClick;
 
 /**
  * 设置团队信息的 Activity
- * <p>
+ *
  * Created by developerHaoz on 2017/7/10.
  */
 
@@ -70,12 +70,15 @@ public class SettingsActivity extends AppCompatActivity {
      * 初始化界面
      */
     private void initView() {
+
+        // 获取信息
         mIvConfirm.setVisibility(View.VISIBLE);
         String teamName = teamManager.getTeamName();
         String teamIntroduce = teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
         String teamPassword = teamManager.getTeamPassword();
 
+        // 实例化控件
         mEtTeamName.setText(teamName);
         mEtTeamIntroduce.setText(teamIntroduce);
         mEtPassword.setText(teamPassword);
@@ -83,10 +86,16 @@ public class SettingsActivity extends AppCompatActivity {
         if(!Check.isEmpty(teamLogoUrl)){
             CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamLogo);
         }
+
+
+        // TODO: 还差一些功能
     }
 
+
     /**
-     * 保存团队的信息
+     * 保存团队信息
+     *
+     * @param teamManager 团队信息的管理类
      */
     private void saveTeamInfo(TeamManager teamManager) {
         String teamName = mEtTeamName.getText().toString();

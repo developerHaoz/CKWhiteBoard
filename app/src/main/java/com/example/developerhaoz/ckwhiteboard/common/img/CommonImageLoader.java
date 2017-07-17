@@ -41,8 +41,9 @@ public class CommonImageLoader {
     public void displayImage(String url, ImageView imageView){
         Glide.with(imageView.getContext())
                 .load(url)
+                .asBitmap()
                 .error(R.mipmap.ic_launcher_round)
-                .placeholder(R.mipmap.ic_launcher_round)
+                .placeholder(R.mipmap.ic_launcher)
                 .dontAnimate()
                 .fitCenter()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)

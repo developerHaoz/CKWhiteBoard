@@ -2,28 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical"
               android:background="@color/settings_background"
+              android:orientation="vertical"
     >
 
     <include layout="@layout/part_toolbar"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_height="56dp"
         android:gravity="center_vertical"
         android:paddingBottom="8dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
-        android:paddingTop="4dp"
+        android:paddingTop="8dp"
         android:text="@string/ChooseEvaluation"
-        android:textSize="12sp"
+        android:textSize="16sp"
         />
 
     <TextView
         android:id="@+id/signature_tv_evaluation"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="24dp"
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:background="@drawable/app_button"
@@ -32,20 +32,21 @@
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:text="@string/Ok"
-        android:textSize="12sp"
+        android:textSize="14sp"
         />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="24dp"/>
+        android:layout_height="32dp"/>
 
     <ImageView
+        android:contentDescription="@string/AppDivide"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/deep_gray"
         />
 
-    <com.example.developerhaoz.ckwhiteboard.test.Doodle
+    <com.example.developerhaoz.ckwhiteboard.doodle.Doodle
         android:id="@+id/signature_doodle"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -54,43 +55,39 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="32dp"
+        android:layout_height="48dp"
         android:background="@color/white"
-        android:paddingBottom="8dp"
         >
 
         <Button
             android:id="@+id/signature_btn_reevaluate"
-            android:layout_width="36dp"
-            android:layout_height="16dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/shape_button_reevaluate"
-            android:src="@mipmap/ic_launcher"
-            android:text="@string/ReEvaluate"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
             android:layout_alignBottom="@+id/signature_btn_confirm"
+            android:layout_alignTop="@+id/signature_btn_confirm"
+            android:layout_marginEnd="48dp"
+            android:layout_marginRight="48dp"
             android:layout_toLeftOf="@+id/signature_btn_confirm"
             android:layout_toStartOf="@+id/signature_btn_confirm"
-            android:layout_alignTop="@+id/signature_btn_confirm"/>
+            android:background="@drawable/shape_button_reevaluate"
+            android:text="@string/ReEvaluate"
+            android:textColor="@color/white"
+            android:textSize="14sp"/>
 
         <Button
             android:id="@+id/signature_btn_confirm"
-            android:layout_width="36dp"
-            android:layout_height="16dp"
+            android:layout_width="48dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:background="@drawable/shape_button_confirm"
-            android:src="@mipmap/ic_launcher"
             android:text="@string/Confirm"
             android:textColor="@color/white"
-            android:textSize="12sp"
+            android:textSize="14sp"
             />
-
 
     </RelativeLayout>
 

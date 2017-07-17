@@ -23,15 +23,15 @@ public class SavePictureUtil {
     /**
      * 将一个 Bitmap 保存在指定的路径中
      *
-     * @param b
-     * @param filePath
+     * @param bitmap
+     * @param filePath 指定的路径
      */
-    public static void savePicByPNG(Bitmap b, String filePath) {
+    public static void savePicByPNG(Bitmap bitmap, String filePath) {
         FileOutputStream fos;
         try {
             fos = new FileOutputStream(filePath);
             if (null != fos) {
-                b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
                 fos.flush();
                 fos.close();
             }
@@ -52,6 +52,12 @@ public class SavePictureUtil {
         return path;
     }
 
+    /**
+     * 将一个 View 转换成 Bitmap
+     *
+     * @param view
+     * @return
+     */
     private static Bitmap getBitmap(View view){
         Bitmap bitmap = Bitmap.createBitmap(view.getLayoutParams().width, view.getLayoutParams().height, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);

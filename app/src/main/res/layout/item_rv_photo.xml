@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_main_photo"
+    android:layout_width="56dp"
+    android:layout_height="56dp"
+    android:layout_gravity="center"
+    android:contentDescription="@string/Photo"
+    android:paddingLeft="2dp"
+    android:paddingStart="2dp"
+    android:paddingBottom="12dp"
+    android:paddingEnd="24dp"
+    android:paddingRight="24dp"
+    android:src="@mipmap/ic_launcher">
+</ImageView>

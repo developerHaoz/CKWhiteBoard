@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
+        android:name=".common.WhiteBoardApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -28,10 +29,11 @@
 
         <activity android:name=".view.activity.SignatureActivity"/>
 
-        <activity android:name=".test.DoodleActivity">
-        </activity>
-
         <activity android:name=".view.activity.PreviewActivity"/>
+
+        <activity android:name=".view.activity.DetailPhotoActivity"/>
+
+        <activity android:name=".view.activity.SelectedPictureActivity"/>
     </application>
 
 </manifest>

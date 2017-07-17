@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
-import com.example.developerhaoz.ckwhiteboard.test.Doodle;
+import com.example.developerhaoz.ckwhiteboard.doodle.Doodle;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +43,6 @@ public class SignatureActivity extends AppCompatActivity {
     Button mBtnConfirm;
 
     private AlertDialog mEvaluationDialog;
-
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SignatureActivity.class);

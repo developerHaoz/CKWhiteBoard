@@ -1,25 +1,34 @@
 package com.example.developerhaoz.ckwhiteboard;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
 import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
+import com.example.developerhaoz.ckwhiteboard.common.img.dialog.DialogFragmentHelper;
+import com.example.developerhaoz.ckwhiteboard.common.img.dialog.IDialogResultListener;
 import com.example.developerhaoz.ckwhiteboard.common.util.Check;
+import com.example.developerhaoz.ckwhiteboard.common.util.PasswordManager;
 import com.example.developerhaoz.ckwhiteboard.common.util.TeamManager;
+import com.example.developerhaoz.ckwhiteboard.view.activity.SelectedPictureActivity;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SettingsActivity;
 import com.example.developerhaoz.ckwhiteboard.view.activity.SignatureActivity;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.MainAdapter;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<String> mPhotoUrlList;
 
-    public static void startActivity(Context context){
+    public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
     }
@@ -61,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        if (ContextCompat.checkSelfPermission(MainActivity.this
+                , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+
     }
 
     /**
@@ -69,20 +83,21 @@ public class MainActivity extends AppCompatActivity {
     private void initView() {
 
         TeamManager teamManager = TeamManager.getInstance(this);
-        String teamName= teamManager.getTeamName();
+        String teamName = teamManager.getTeamName();
         String teamIntroduce = teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
 
-        if(Check.isEmpty(teamName)){
+        if (Check.isEmpty(teamName)) {
             mTvTeamName.setText(R.string.TeamName);
-        }else {
+        } else {
             mTvTeamName.setText(teamName);
         }
 
-        if(Check.isEmpty(teamIntroduce)){
+        if (Check.isEmpty(teamIntroduce)) {
             mTvTeamIntroduce.setText(R.string.TeamIntroduceTemp);
-        }else {
-            mTvTeamIntroduce.setText("团队简介：" + teamIntroduce);
+        } else {
+            String teamIntroduceStr = "团队简介：";
+            mTvTeamIntroduce.setText(teamIntroduceStr + teamIntroduce);
         }
 
         CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
@@ -90,15 +105,22 @@ public class MainActivity extends AppCompatActivity {
         mPhotoUrlList = new ArrayList<>();
         initPhotoUrlList();
         mRvPhotoWall.setLayoutManager(new GridLayoutManager(this, 3));
-        mRvPhotoWall.setAdapter(new MainAdapter(mPhotoUrlList));
+        mRvPhotoWall.setAdapter(new MainAdapter(mPhotoUrlList, MainActivity.this));
     }
 
     private void initPhotoUrlList() {
 
-        String imageUrl = "/storage/emulated/0/doodleview/1500007762515.png";
-//        String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
-        for (int i = 0; i < 15; i++) {
-            mPhotoUrlList.add(imageUrl);
+        List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
+
+        if (!Check.isEmpty(pictureBeen)) {
+            for (PictureBean pictureBean : pictureBeen) {
+                mPhotoUrlList.add(pictureBean.getPicturePath());
+            }
+        } else {
+            String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
+            for (int i = 0; i < 15; i++) {
+                mPhotoUrlList.add(imageUrl);
+            }
         }
     }
 
@@ -106,20 +128,96 @@ public class MainActivity extends AppCompatActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.main_iv_photo:
-                Matisse.from(MainActivity.this)
-                        .choose(MimeType.allOf())
-                        .countable(true)
-                        .maxSelectable(9)
-                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                        .thumbnailScale(0.85f)
-                        .imageEngine(new GlideEngine())
-                        .forResult(REQUEST_CODE_CHOOSE);
+                doSelectedPicture();
                 break;
             case R.id.main_iv_settings:
-                SettingsActivity.startActivity(this);
+                doSettings();
                 break;
             case R.id.main_iv_great:
                 SignatureActivity.startActivity(this);
+                break;
+        }
+    }
+
+    /**
+     * 进入选择图片的界面
+     */
+    private void doSelectedPicture() {
+        String title = "输入权限密码";
+        DialogFragmentHelper.showPasswordInsertDialog(getFragmentManager(), title, new IDialogResultListener<String>() {
+            @Override
+            public void onDataResult(String result) {
+                String passwordInput = result;
+                if (Check.isEmpty(result)){
+                    String tips = "密码不能为空";
+                    Toast.makeText(MainActivity.this, tips, Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean isCorrect = confirmPassword(passwordInput);
+                    if(isCorrect){
+                        selectedPicture();
+                    }
+                }
+            }
+        }, false);
+    }
+
+    /**
+     * 选择图片
+     */
+    private void selectedPicture() {
+        SelectedPictureActivity.startActivity(this);
+    }
+
+    /**
+     * 进入设置界面之前的密码判断
+     */
+    private void doSettings() {
+        String title = "输入权限密码";
+        DialogFragmentHelper.showPasswordInsertDialog(getFragmentManager(), title, new IDialogResultListener<String>() {
+            @Override
+            public void onDataResult(String result) {
+                String passwordInput = result;
+                if (Check.isEmpty(result)){
+                    String tips = "密码不能为空";
+                    Toast.makeText(MainActivity.this, tips, Toast.LENGTH_SHORT).show();
+                }else {
+                    boolean isCorrect = confirmPassword(passwordInput);
+                    if(isCorrect){
+                        SettingsActivity.startActivity(MainActivity.this);
+                    }
+                }
+            }
+        }, false);
+    }
+
+    /**
+     * 判断密码是否正确
+     *
+     * @param passwordInput 输入的密码
+     */
+    private boolean confirmPassword(String passwordInput) {
+        String commonPassword = PasswordManager.getInstance(MainActivity.this).getCommonPassword();
+        String teamPassword = TeamManager.getInstance(MainActivity.this).getTeamPassword();
+        if(commonPassword.equals(passwordInput) || teamPassword.equals(passwordInput)){
+            return true;
+        }else {
+            String passwordError = "密码错误";
+            Toast.makeText(MainActivity.this, passwordError, Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        switch(requestCode){
+            case 1:
+                if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }else {
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            default:
                 break;
         }
     }

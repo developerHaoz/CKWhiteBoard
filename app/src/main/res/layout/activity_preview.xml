@@ -17,13 +17,13 @@
         android:paddingLeft="20dp"
         android:paddingRight="2dp"
         android:paddingStart="20dp"
-        android:paddingTop="6dp"
+        android:paddingTop="8dp"
         >
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/preview_iv_team_avatar"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:contentDescription="@string/TeamAvatar"
             android:src="@mipmap/ic_launcher"
             />
@@ -31,20 +31,20 @@
         <TextView
             android:id="@+id/preview_tv_team_name"
             android:layout_width="200dp"
-            android:layout_height="16dp"
+            android:layout_height="24dp"
             android:layout_alignLeft="@+id/preview_tv_team_introduce"
             android:layout_alignParentTop="true"
             android:layout_alignStart="@+id/preview_tv_team_introduce"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="6dp"
             android:gravity="center_vertical"
             android:text="@string/TeamName"
-            android:textSize="12sp"/>
+            android:textSize="16sp"/>
 
 
         <TextView
             android:id="@+id/preview_tv_team_introduce"
             android:layout_width="match_parent"
-            android:layout_height="16dp"
+            android:layout_height="24dp"
             android:layout_below="@+id/preview_tv_team_name"
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
@@ -53,7 +53,7 @@
             android:layout_toRightOf="@+id/preview_iv_team_avatar"
             android:gravity="center_vertical"
             android:text="@string/TeamIntroduceTemp"
-            android:textSize="12sp"/>
+            android:textSize="16sp"/>
     </RelativeLayout>
 
     <TextView
@@ -64,9 +64,9 @@
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
         android:paddingStart="20dp"
-        android:paddingTop="16dp"
+        android:paddingTop="20dp"
         android:text="@string/Encourage"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:paddingEnd="10dp"
         />
 
@@ -86,13 +86,13 @@
     <TextView
         android:id="@+id/preview_tv_time"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="56dp"
         android:paddingBottom="24dp"
         android:paddingEnd="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:paddingStart="20dp"
         android:text="@string/Time"
-        android:textSize="12sp"
+        android:textSize="16sp"
         />
 </LinearLayout>

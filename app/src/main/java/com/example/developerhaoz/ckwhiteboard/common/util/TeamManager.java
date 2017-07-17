@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * 保存团队的信息
+ * 团队的信息的管理类
  *
  * Created by developerHaoz on 2017/7/12.
  */
