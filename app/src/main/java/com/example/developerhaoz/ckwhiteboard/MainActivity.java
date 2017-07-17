@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_CHOOSE = 1;
+    private static final int REQUEST_CODE_SELECTED = 2;
 
     @BindView(R.id.main_iv_team_avatar)
     ImageView mIvTeamAvatar;
@@ -165,7 +166,8 @@ public class MainActivity extends AppCompatActivity {
      * 选择图片
      */
     private void selectedPicture() {
-        SelectedPictureActivity.startActivity(this);
+        Intent intent = new Intent(this, SelectedPictureActivity.class);
+        startActivityForResult(intent, REQUEST_CODE_SELECTED);
     }
 
     /**
@@ -204,6 +206,14 @@ public class MainActivity extends AppCompatActivity {
             String passwordError = "密码错误";
             Toast.makeText(MainActivity.this, passwordError, Toast.LENGTH_SHORT).show();
             return false;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_SELECTED){
+            startActivity(this);
+            finish();
         }
     }
 

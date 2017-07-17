@@ -54,6 +54,7 @@ public class SignatureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signature);
         ButterKnife.bind(this);
+        mIvConfirm.setVisibility(View.GONE);
         initView();
     }
 

@@ -95,7 +95,7 @@ public class SettingsActivity extends AppCompatActivity {
     /**
      * 保存团队信息
      *
-     * @param teamManager 团队信息的管理类
+     * @param teamManager
      */
     private void saveTeamInfo(TeamManager teamManager) {
         String teamName = mEtTeamName.getText().toString();

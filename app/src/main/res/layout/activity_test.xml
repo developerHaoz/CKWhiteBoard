@@ -5,4 +5,9 @@
               android:orientation="vertical"
     >
 
+    <ImageView
+        android:id="@+id/test_iv_show_photo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
 </LinearLayout>

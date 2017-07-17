@@ -2,6 +2,8 @@ package com.example.developerhaoz.ckwhiteboard.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +16,9 @@ import android.widget.Toast;
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.SelectedPictureAdapter;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import org.litepal.crud.DataSupport;
 
@@ -31,6 +36,9 @@ import butterknife.OnClick;
  */
 
 public class SelectedPictureActivity extends AppCompatActivity {
+
+    private static final String TAG = "SelectedPictureActivity";
+    private static final int REQUEST_CODE_CHOOSE = 1;
 
     @BindView(R.id.selected_picture_iv_back)
     ImageView mIvBack;
@@ -62,7 +70,6 @@ public class SelectedPictureActivity extends AppCompatActivity {
         SelectedPictureAdapter adapter = new SelectedPictureAdapter(this, photoUrlList);
         mRvShowPhotoWall.setLayoutManager(new GridLayoutManager(this, 4));
         mRvShowPhotoWall.setAdapter(adapter);
-
     }
 
     @OnClick({R.id.selected_picture_iv_back, R.id.selected_picture_iv_import, R.id.selected_picture_iv_export})
@@ -72,11 +79,34 @@ public class SelectedPictureActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.selected_picture_iv_import:
-                Toast.makeText(this, "import picture", Toast.LENGTH_SHORT).show();
+                Matisse.from(SelectedPictureActivity.this)
+                        .choose(MimeType.allOf())
+                        .countable(true)
+                        .maxSelectable(20)
+                        .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                        .thumbnailScale(0.85f)
+                        .imageEngine(new GlideEngine())
+                        .forResult(REQUEST_CODE_CHOOSE);
                 break;
             case R.id.selected_picture_iv_export:
                 Toast.makeText(this, "export picture", Toast.LENGTH_SHORT).show();
                 break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE_CHOOSE) {
+            List<Uri> imageUri = Matisse.obtainResult(data);
+            List<PictureBean> pictureBeanList = new ArrayList<>();
+            for (int i = 0; i < imageUri.size(); i++) {
+                PictureBean pictureBean = new PictureBean();
+                pictureBean.setPicturePath(String.valueOf(imageUri.get(i)));
+                pictureBeanList.add(pictureBean);
+            }
+            DataSupport.saveAll(pictureBeanList);
+            startActivity(this);
+            finish();
         }
     }
 }

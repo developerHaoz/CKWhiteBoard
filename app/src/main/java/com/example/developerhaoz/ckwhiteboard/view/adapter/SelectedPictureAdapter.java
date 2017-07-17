@@ -7,8 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.developerhaoz.ckwhiteboard.R;
-import com.example.developerhaoz.ckwhiteboard.common.img.CommonImageLoader;
 import com.example.developerhaoz.ckwhiteboard.common.util.Check;
 import com.example.developerhaoz.ckwhiteboard.view.activity.DetailPhotoActivity;
 
@@ -40,7 +41,17 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
     @Override
     public void onBindViewHolder(SelectedPictureViewHolder holder, final int position) {
         final String photoUrl = mPhotoUrlList.get(position);
-        CommonImageLoader.getInstance().displayImage(photoUrl, holder.mIvPhoto);
+        Glide.with(mActivityWeakReference.get())
+                .load(photoUrl)
+                .asBitmap()
+                .override(208, 208)
+                .error(R.drawable.selected_image)
+                .placeholder(R.drawable.selected_image)
+                .dontAnimate()
+                .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .into(holder.mIvPhoto);
+
         holder.mIvPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +73,7 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
 
         private ImageView mIvPhoto;
 
-         SelectedPictureViewHolder(View itemView) {
+        public SelectedPictureViewHolder(View itemView) {
             super(itemView);
             mIvPhoto = (ImageView) itemView.findViewById(R.id.item_selected_picture_photo);
         }

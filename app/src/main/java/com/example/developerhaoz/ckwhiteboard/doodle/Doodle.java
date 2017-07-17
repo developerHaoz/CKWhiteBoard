@@ -93,12 +93,12 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
             return false;
         }
 
-        float touchX = event.getRawX();
-        float touchY = event.getRawY();
+        float touchX = event.getX();
+        float touchY = event.getY();
 
         switch (action) {
             case MotionEvent.ACTION_DOWN:
-                setCurAction(touchX, touchY - 320);
+                setCurAction(touchX, touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 Canvas canvas = mSurfaceHolder.lockCanvas();
@@ -106,7 +106,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
                 for (Action a : mActions) {
                     a.draw(canvas);
                 }
-                curAction.move(touchX, touchY - 320);
+                curAction.move(touchX, touchY);
                 curAction.draw(canvas);
                 mSurfaceHolder.unlockCanvasAndPost(canvas);
                 break;
@@ -118,7 +118,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
             default:
                 break;
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
     // 得到当前画笔的类型，并进行实例
