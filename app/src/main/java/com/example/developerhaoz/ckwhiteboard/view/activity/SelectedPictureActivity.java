@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -67,8 +68,14 @@ public class SelectedPictureActivity extends AppCompatActivity {
             photoUrlList.add(pictureBeanList.get(i).getPicturePath());
         }
 
-        SelectedPictureAdapter adapter = new SelectedPictureAdapter(this, photoUrlList);
+        final SelectedPictureAdapter adapter = new SelectedPictureAdapter(this, photoUrlList);
         mRvShowPhotoWall.setLayoutManager(new GridLayoutManager(this, 4));
+        adapter.setOnLongListener(new SelectedPictureAdapter.OnSelectedCallback() {
+            @Override
+            public void onLongClick() {
+                adapter.notifyDataSetChanged();
+            }
+        });
         mRvShowPhotoWall.setAdapter(adapter);
     }
 
@@ -94,19 +101,23 @@ public class SelectedPictureActivity extends AppCompatActivity {
         }
     }
 
-    @Override
+    @Override@NonNull
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CODE_CHOOSE) {
-            List<Uri> imageUri = Matisse.obtainResult(data);
-            List<PictureBean> pictureBeanList = new ArrayList<>();
-            for (int i = 0; i < imageUri.size(); i++) {
-                PictureBean pictureBean = new PictureBean();
-                pictureBean.setPicturePath(String.valueOf(imageUri.get(i)));
-                pictureBeanList.add(pictureBean);
+            if(data != null){
+                List<Uri> imageUri = Matisse.obtainResult(data);
+                List<PictureBean> pictureBeanList = new ArrayList<>();
+                for (int i = 0; i < imageUri.size(); i++) {
+                    PictureBean pictureBean = new PictureBean();
+                    pictureBean.setPicturePath(String.valueOf(imageUri.get(i)));
+                    pictureBeanList.add(pictureBean);
+                }
+                DataSupport.saveAll(pictureBeanList);
+                startActivity(this);
+                finish();
             }
-            DataSupport.saveAll(pictureBeanList);
-            startActivity(this);
-            finish();
+
+
         }
     }
 }
