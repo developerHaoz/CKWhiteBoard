@@ -49,7 +49,6 @@ public class DetailPhotoActivity extends AppCompatActivity {
     private void initView() {
         Intent intent = getIntent();
         String imageUrl = intent.getStringExtra(IMAGE_URL);
-//        CommonImageLoader.getInstance().displayImage(imageUrl, mPvShowPhoto);
         Glide.with(this)
                 .load(imageUrl)
                 .asBitmap()

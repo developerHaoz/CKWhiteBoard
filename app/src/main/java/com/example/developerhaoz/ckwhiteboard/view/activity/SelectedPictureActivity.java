@@ -12,7 +12,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
@@ -38,7 +37,6 @@ import butterknife.OnClick;
 
 public class SelectedPictureActivity extends AppCompatActivity {
 
-    private static final String TAG = "SelectedPictureActivity";
     private static final int REQUEST_CODE_CHOOSE = 1;
 
     @BindView(R.id.selected_picture_iv_back)
@@ -96,7 +94,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         .forResult(REQUEST_CODE_CHOOSE);
                 break;
             case R.id.selected_picture_iv_export:
-                Toast.makeText(this, "export picture", Toast.LENGTH_SHORT).show();
+                // TODO: 2017/8/14 导出图片的功能 
                 break;
         }
     }

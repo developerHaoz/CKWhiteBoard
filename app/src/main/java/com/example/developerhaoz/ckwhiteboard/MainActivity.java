@@ -31,6 +31,7 @@ import com.example.developerhaoz.ckwhiteboard.view.adapter.MainAdapter;
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +40,6 @@ import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     private static final int REQUEST_CODE_CHOOSE = 1;
     private static final int REQUEST_CODE_SELECTED = 2;
 
@@ -117,6 +117,7 @@ public class MainActivity extends AppCompatActivity {
             for (PictureBean pictureBean : pictureBeen) {
                 mPhotoUrlList.add(pictureBean.getPicturePath());
             }
+            Collections.reverse(mPhotoUrlList);
         } else {
             String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
             for (int i = 0; i < 15; i++) {
@@ -224,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED){
 
                 }else {
-                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show();
                 }
                 break;
             default:

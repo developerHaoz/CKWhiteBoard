@@ -87,10 +87,7 @@ public class SettingsActivity extends AppCompatActivity {
             CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamLogo);
         }
 
-
-        // TODO: 还差一些功能
     }
-
 
     /**
      * 保存团队信息

@@ -67,15 +67,14 @@ public class SignatureActivity extends AppCompatActivity {
         return mDoodle.onTouchEvent(event);
     }
 
-    @OnClick({R.id.toolbar_iv_back, R.id.toolbar_iv_confirm, R.id.signature_tv_evaluation
-            , R.id.signature_btn_reevaluate, R.id.signature_btn_confirm})
+    @OnClick({R.id.toolbar_iv_back,
+            R.id.signature_tv_evaluation,
+            R.id.signature_btn_reevaluate,
+            R.id.signature_btn_confirm})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_iv_back:
                 finish();
-                break;
-            case R.id.toolbar_iv_confirm:
-                Toast.makeText(this, "You click confirm", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.signature_tv_evaluation:
                 showEvaluationDialog();

@@ -60,7 +60,7 @@ public class PreviewActivity extends AppCompatActivity {
     private static final String KEY_EVALUATION = "evaluation";
 
     /**
-     * 进行倒计时保存图片
+     * 进行 5s 倒计时保存图片
      */
     private CountDownTimer timer = new CountDownTimer(5000, 1000) {
         @Override
@@ -101,10 +101,12 @@ public class PreviewActivity extends AppCompatActivity {
     private void initView() {
 
         Intent intent = getIntent();
-        String imageUrl = intent.getStringExtra(KEY_IMAGE_URL);
-        String evaluation = "评语：" + intent.getStringExtra(KEY_EVALUATION);
-        CommonImageLoader.getInstance().displayImage(imageUrl, mIvSignature);
-        mTvEvaluation.setText(evaluation);
+        if(intent != null){
+            String imageUrl = intent.getStringExtra(KEY_IMAGE_URL);
+            String evaluation = "评语：" + intent.getStringExtra(KEY_EVALUATION);
+            CommonImageLoader.getInstance().displayImage(imageUrl, mIvSignature);
+            mTvEvaluation.setText(evaluation);
+        }
 
         // 初始化团队信息
         TeamManager teamManager = TeamManager.getInstance(this);
@@ -112,9 +114,7 @@ public class PreviewActivity extends AppCompatActivity {
         String teamIntroduce = "团队简介：" + teamManager.getTeamIntroduce();
         String teamLogoUrl = teamManager.getTeamLogoUrl();
         mTvTeamName.setText(teamName);
-
         mTvTeamIntroduce.setText(teamIntroduce);
-        mTvEvaluation.setText(evaluation);
         CommonImageLoader.getInstance().displayImage(teamLogoUrl, mIvTeamAvatar);
 
         // 初始化时间
