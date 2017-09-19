@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -26,6 +27,7 @@ import java.util.List;
 public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
     private SurfaceHolder mSurfaceHolder = null;
+    private static final String TAG = "Doodle";
 
     //当前所选画笔的形状
     private Action curAction = null;
@@ -83,7 +85,7 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
+        Log.d(TAG, "surfaceDestroyed: ");
     }
 
     @Override
