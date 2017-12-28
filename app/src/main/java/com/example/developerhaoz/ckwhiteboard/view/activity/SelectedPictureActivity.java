@@ -43,8 +43,6 @@ public class SelectedPictureActivity extends AppCompatActivity {
     ImageView mIvBack;
     @BindView(R.id.selected_picture_iv_import)
     ImageView mIvImportPicture;
-    @BindView(R.id.selected_picture_iv_export)
-    ImageView mIvExportPicture;
     @BindView(R.id.selected_picture_rv_show_photo_wall)
     RecyclerView mRvShowPhotoWall;
 
@@ -77,7 +75,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
         mRvShowPhotoWall.setAdapter(adapter);
     }
 
-    @OnClick({R.id.selected_picture_iv_back, R.id.selected_picture_iv_import, R.id.selected_picture_iv_export})
+    @OnClick({R.id.selected_picture_iv_back, R.id.selected_picture_iv_import})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.selected_picture_iv_back:
@@ -92,9 +90,6 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         .thumbnailScale(0.85f)
                         .imageEngine(new GlideEngine())
                         .forResult(REQUEST_CODE_CHOOSE);
-                break;
-            case R.id.selected_picture_iv_export:
-                // TODO: 2017/8/14 导出图片的功能 
                 break;
         }
     }

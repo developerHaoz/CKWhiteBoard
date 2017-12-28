@@ -44,7 +44,7 @@
         <TextView
             android:id="@+id/preview_tv_team_introduce"
             android:layout_width="match_parent"
-            android:layout_height="24dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/preview_tv_team_name"
             android:layout_marginLeft="18dp"
             android:layout_marginStart="18dp"
@@ -61,13 +61,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"
+        android:paddingEnd="10dp"
         android:paddingLeft="20dp"
         android:paddingRight="10dp"
         android:paddingStart="20dp"
         android:paddingTop="20dp"
         android:text="@string/Encourage"
         android:textSize="16sp"
-        android:paddingEnd="10dp"
         />
 
     <ImageView

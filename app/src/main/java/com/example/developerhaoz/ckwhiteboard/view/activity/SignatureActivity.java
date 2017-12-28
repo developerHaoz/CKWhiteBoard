@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.doodle.Doodle;
@@ -95,7 +94,6 @@ public class SignatureActivity extends AppCompatActivity {
      */
     private void doConfirm() {
         String path = mDoodle.saveBitmap(mDoodle);
-        Toast.makeText(this, path, Toast.LENGTH_SHORT).show();
         String evaluation = mTvEvaluation.getText().toString();
         PreviewActivity.startActivity(path, evaluation, SignatureActivity.this);
     }
