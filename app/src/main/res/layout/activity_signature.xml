@@ -46,48 +46,46 @@
         android:background="@color/deep_gray"
         />
 
-    <com.example.developerhaoz.ckwhiteboard.doodle.Doodle
-        android:id="@+id/signature_doodle"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
         android:background="@color/white"
         >
+
+        <com.example.developerhaoz.ckwhiteboard.doodle.Doodle
+            android:id="@+id/signature_doodle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            />
 
         <Button
             android:id="@+id/signature_btn_reevaluate"
             android:layout_width="48dp"
             android:layout_height="24dp"
-            android:layout_alignBottom="@+id/signature_btn_confirm"
-            android:layout_alignTop="@+id/signature_btn_confirm"
-            android:layout_marginEnd="48dp"
             android:layout_marginRight="48dp"
-            android:layout_toLeftOf="@+id/signature_btn_confirm"
-            android:layout_toStartOf="@+id/signature_btn_confirm"
             android:background="@drawable/shape_button_reevaluate"
             android:text="@string/ReEvaluate"
             android:textColor="@color/white"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toStartOf="@+id/signature_btn_confirm"
+            android:layout_marginEnd="16dp"/>
 
         <Button
             android:id="@+id/signature_btn_confirm"
             android:layout_width="48dp"
             android:layout_height="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/shape_button_confirm"
             android:text="@string/Confirm"
             android:textColor="@color/white"
             android:textSize="14sp"
-            />
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"/>
 
     </RelativeLayout>
 

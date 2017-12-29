@@ -23,9 +23,6 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.TestActivity">
-        </activity>
-
         <activity android:name=".view.activity.SettingsActivity"/>
 
         <activity android:name=".view.activity.SignatureActivity"/>
