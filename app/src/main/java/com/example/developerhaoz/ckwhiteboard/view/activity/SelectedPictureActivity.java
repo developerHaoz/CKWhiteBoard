@@ -12,24 +12,23 @@ import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
-import com.example.developerhaoz.ckwhiteboard.common.util.Check;
-import com.example.developerhaoz.ckwhiteboard.common.util.FileUtil;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.SelectedPictureAdapter;
 import com.github.mjdev.libaums.UsbMassStorageDevice;
 import com.github.mjdev.libaums.fs.FileSystem;
 import com.github.mjdev.libaums.fs.UsbFile;
-import com.github.mjdev.libaums.fs.UsbFileOutputStream;
 import com.github.mjdev.libaums.partition.Partition;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -37,11 +36,15 @@ import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import org.litepal.crud.DataSupport;
 
-import java.io.FileOutputStream;
-import java.io.OutputStream;
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,6 +87,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
      * 自定义的广播
      */
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
+    private static final String TAG = "Selected3333";
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectedPictureActivity.class);
@@ -141,32 +145,50 @@ public class SelectedPictureActivity extends AppCompatActivity {
                 try {
                     UsbFile root = currentFs.getRootDirectory();
                     UsbFile[] files = root.listFiles();
+                    Toast.makeText(this, "1111", Toast.LENGTH_SHORT).show();
                     // 在 U 盘中创建文件夹
-                    UsbFile newDir = root.createDirectory("hero");
+                    UsbFile newDir = root.createDirectory("her");
 
+                    Toast.makeText(this, "2222", Toast.LENGTH_SHORT).show();
                     // 以下方法能够将 test.txt 写入 U 盘
-//                    UsbFile file = newDir.createFile("test.txt");
-//                    OutputStream os = new UsbFileOutputStream(file);
+                    UsbFile file = newDir.createFile("test.jpg");
+                    List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
+                    Bitmap bitmap = BitmapFactory.decodeFile(pictureBeen.get(0).getPicturePath());
+                    try {
+                        ByteArrayOutputStream out = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                        out.write(out.toByteArray());
+                        out.flush();
+                        out.close();
+//                        OutputStream os = new UsbFileOutputStream(file);
+//                        FileOutputStream fos = (FileOutputStream) os;
+//                        if (null != fos) {
+//                            bitmap.compress(Bitmap.CompressFormat.PNG, 90, fos);
+//                            fos.flush();
+//                            fos.close();
+//                        }
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+//                    OutputStream os  = new UsbFileOutputStream(file);
 //                    os.write("hello worldss".getBytes());
 //                    os.close();
-                    List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
-
-                    if (!Check.isEmpty(pictureBeen)) {
-                        for (PictureBean pictureBean : pictureBeen) {
-                            mPhotoUrlList.add(pictureBean.getPicturePath());
-                        }
-                        Collections.reverse(mPhotoUrlList);
-                    } else {
-                        showToastMsg("当前没有图片");
-                    }
-                    // 本想将图片写入到 U 盘内，但不知道为什么实现不了
-                    Bitmap bitmap = BitmapFactory.decodeFile(FileUtil.getRealFilePath(this, Uri.parse(mPhotoUrlList.get(0))));
-                    UsbFile img = newDir.createFile(System.currentTimeMillis() + ".jpg");
-                    OutputStream os = new UsbFileOutputStream(img);
-                    FileOutputStream fos = (FileOutputStream) os;
-                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                    fos.flush();
-                    fos.close();
+//                    List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
+//
+//                    if (!Check.isEmpty(pictureBeen)) {
+//                        for (PictureBean pictureBean : pictureBeen) {
+//                            mPhotoUrlList.add(pictureBean.getPicturePath());
+//                        }
+//                        Collections.reverse(mPhotoUrlList);
+//                    } else {
+//                        showToastMsg("当前没有图片");
+//                    }
+//                    Bitmap bitmap = BitmapFactory.decodeFile(pictureBeen.get(0).getPicturePath());
+//                    SavePictureUtil.savePicByPNG(bitmap, "/storage/emulated/0/hero5555");
+                    Toast.makeText(this, "写入成功", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -184,6 +206,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
         IntentFilter usbDeviceStateFilter = new IntentFilter();
         usbDeviceStateFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         usbDeviceStateFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
+        usbDeviceStateFilter.addAction(Intent.ACTION_MEDIA_MOUNTED);
         registerReceiver(mOtgReceiver, usbDeviceStateFilter);
         // 注册监听自定义广播
         IntentFilter filter = new IntentFilter(ACTION_USB_PERMISSION);
@@ -258,7 +281,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         showToastMsg("未获取到U盘权限");
                     }
                     break;
-                // 接收到U盘设备插入广播
+                // 接收到 U 盘设备插入广播
                 case UsbManager.ACTION_USB_DEVICE_ATTACHED:
                     UsbDevice device_add = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                     if (device_add != null) {
@@ -269,6 +292,10 @@ public class SelectedPictureActivity extends AppCompatActivity {
                 // 接收到U盘设设备拔出广播
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
                     showToastMsg("U盘已拔出");
+                    break;
+                case Intent.ACTION_MEDIA_MOUNTED:
+                    String usbPath = intent.getData().getPath();
+                    Log.d(TAG, "mounted" + usbPath);
                     break;
             }
         }
@@ -281,6 +308,12 @@ public class SelectedPictureActivity extends AppCompatActivity {
             }
         }
         return null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(mOtgReceiver);
     }
 
     @Override
@@ -301,4 +334,52 @@ public class SelectedPictureActivity extends AppCompatActivity {
             }
         }
     }
+
+    public static List<String> getAllExterSdcardPath() {
+        List<String> SdList = new ArrayList<String>();
+
+        String firstPath = Environment.getExternalStorageDirectory().getPath();
+
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            // 运行mount命令，获取命令的输出，得到系统中挂载的所有目录
+            Process proc = runtime.exec("mount");
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            String line;
+            BufferedReader br = new BufferedReader(isr);
+            while ((line = br.readLine()) != null) {
+                Log.d("", line);
+                // 将常见的linux分区过滤掉
+
+                if (line.contains("proc") || line.contains("tmpfs") || line.contains("media") || line.contains("asec") || line.contains("secure") || line.contains("system") || line.contains("cache")
+                        || line.contains("sys") || line.contains("data") || line.contains("shell") || line.contains("root") || line.contains("acct") || line.contains("misc") || line.contains("obb")) {
+                    continue;
+                }
+
+                // 下面这些分区是我们需要的
+                if (line.contains("fat") || line.contains("fuse") || (line.contains("ntfs"))) {
+                    // 将mount命令获取的列表分割，items[0]为设备名，items[1]为挂载路径
+                    String items[] = line.split(" ");
+                    if (items != null && items.length > 1) {
+                        String path = items[1].toLowerCase(Locale.getDefault());
+                        // 添加一些判断，确保是sd卡，如果是otg等挂载方式，可以具体分析并添加判断条件
+                        if (path != null && !SdList.contains(path) && path.contains("sd"))
+                            SdList.add(items[1]);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        if (!SdList.contains(firstPath)) {
+            SdList.add(firstPath);
+        }
+
+        return SdList;
+    }
+
+
 }

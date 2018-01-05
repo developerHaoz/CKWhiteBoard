@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
 
     private List<String> mPhotoUrlList;
 
+    private static final String TAG = "Main222222";
+
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
         context.startActivity(intent);
@@ -112,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
     private void initPhotoUrlList() {
 
         List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
-
         if (!Check.isEmpty(pictureBeen)) {
             for (PictureBean pictureBean : pictureBeen) {
                 mPhotoUrlList.add(pictureBean.getPicturePath());
