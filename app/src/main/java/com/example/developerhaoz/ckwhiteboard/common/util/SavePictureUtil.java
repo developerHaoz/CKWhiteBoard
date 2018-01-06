@@ -8,6 +8,8 @@ import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
@@ -17,11 +19,14 @@ import com.github.mjdev.libaums.fs.UsbFileOutputStream;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.util.List;
 
@@ -34,6 +39,7 @@ import java.util.List;
 public class SavePictureUtil {
 
     private static final String PATH_SAVE_PICUTRE = "/signaturePath/";
+    private DialogFragment mDialogFragment;
 
     /**
      * 将一个 Bitmap 保存在指定的路径中
@@ -87,7 +93,7 @@ public class SavePictureUtil {
      * @param newDir 保存的文件夹名称
      * @throws IOException
      */
-    public static void savePictureToUsb(UsbFile newDir) throws IOException{
+    public static void savePictureToUsb(AppCompatActivity context, UsbFile newDir) throws IOException{
         List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
         for (int i = 0; i < pictureBeen.size(); i++) {
             UsbFile file = newDir.createFile("ck" + System.currentTimeMillis() + ".jpg");
@@ -103,7 +109,6 @@ public class SavePictureUtil {
             file.flush();
             file.close();
         }
-
     }
 
     private static String getRealPathFromUri(Context context, Uri contentUri) {
@@ -123,6 +128,43 @@ public class SavePictureUtil {
             }
         }
     }
+
+    public static String getExternalStorageDirectory(){
+        String dir = new String();
+        try {
+            Runtime runtime = Runtime.getRuntime();
+            Process proc = runtime.exec("mount");
+            InputStream is = proc.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            String line;
+            BufferedReader br = new BufferedReader(isr);
+            while ((line = br.readLine()) != null) {
+                // System.out.println(line);
+                if (line.contains("secure")) continue;
+                if (line.contains("asec")) continue;
+
+                if (line.contains("fat")) {
+                    String columns[] = line.split(" ");
+                    if (columns != null && columns.length > 1) {
+                        dir = dir.concat(columns[1] );
+                        break;
+                    }
+                } else if (line.contains("fuse")) {
+                    String columns[] = line.split(" ");
+                    if (columns != null && columns.length > 1) {
+                        dir = dir.concat(columns[1]);
+                        break;
+                    }
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return dir;
+    }
+
 
 }
 

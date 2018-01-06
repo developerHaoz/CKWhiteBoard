@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -59,8 +60,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView mIvGreat;
 
     private List<String> mPhotoUrlList;
-
-    private static final String TAG = "Main222222";
+    private DialogFragment mDialogFragment;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 , Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
         }
-
     }
 
     /**
@@ -112,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initPhotoUrlList() {
-
         List<PictureBean> pictureBeen = DataSupport.findAll(PictureBean.class);
         if (!Check.isEmpty(pictureBeen)) {
             for (PictureBean pictureBean : pictureBeen) {
@@ -147,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void doSelectedPicture() {
         String title = "输入权限密码";
-        DialogFragmentHelper.showPasswordInsertDialog(getFragmentManager(), title, new IDialogResultListener<String>() {
+        DialogFragmentHelper.showPasswordInsertDialog(getSupportFragmentManager(), title, new IDialogResultListener<String>() {
             @Override
             public void onDataResult(String result) {
                 String passwordInput = result;
@@ -177,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void doSettings() {
         String title = "输入权限密码";
-        DialogFragmentHelper.showPasswordInsertDialog(getFragmentManager(), title, new IDialogResultListener<String>() {
+        DialogFragmentHelper.showPasswordInsertDialog(getSupportFragmentManager(), title, new IDialogResultListener<String>() {
             @Override
             public void onDataResult(String result) {
                 String passwordInput = result;

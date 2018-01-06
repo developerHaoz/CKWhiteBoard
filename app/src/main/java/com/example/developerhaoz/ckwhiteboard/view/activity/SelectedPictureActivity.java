@@ -12,17 +12,23 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
+import com.example.developerhaoz.ckwhiteboard.common.img.dialog.CommonDialogFragment;
+import com.example.developerhaoz.ckwhiteboard.common.img.dialog.DialogFragmentHelper;
+import com.example.developerhaoz.ckwhiteboard.common.img.dialog.IDialogResultListener;
 import com.example.developerhaoz.ckwhiteboard.common.util.SavePictureUtil;
+import com.example.developerhaoz.ckwhiteboard.common.util.UsbFileEvent;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.SelectedPictureAdapter;
 import com.github.mjdev.libaums.UsbMassStorageDevice;
 import com.github.mjdev.libaums.fs.FileSystem;
@@ -32,8 +38,12 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import org.litepal.crud.DataSupport;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,6 +69,10 @@ public class SelectedPictureActivity extends AppCompatActivity {
     ImageView mIvExportPicture;
     @BindView(R.id.selected_picture_rv_show_photo_wall)
     RecyclerView mRvShowPhotoWall;
+    @BindView(R.id.selected_picture_rl)
+    RelativeLayout mRl;
+    @BindView(R.id.progressBar)
+    ProgressBar mProgress;
 
     private FileSystem currentFs;
     /**
@@ -78,7 +92,8 @@ public class SelectedPictureActivity extends AppCompatActivity {
      * 自定义的广播
      */
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
-    private static final String TAG = "Selected3333";
+
+    private DialogFragment mDialogFragment;
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectedPictureActivity.class);
@@ -90,18 +105,22 @@ public class SelectedPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_picture);
         ButterKnife.bind(this);
-
         registerUDiskReceiver();
         /**
          * 数据库用的是郭霖的 LitePal，以下是获取所有图片实体类的方法
          */
         List<PictureBean> pictureBeanList = DataSupport.findAll(PictureBean.class);
         List<String> photoUrlList = new ArrayList<>();
-
         for (int i = 0; i < pictureBeanList.size(); i++) {
             photoUrlList.add(pictureBeanList.get(i).getPicturePath());
         }
         initPhotoWall(photoUrlList);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     private void initPhotoWall(List<String> photoUrlList) {
@@ -133,12 +152,29 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         .forResult(REQUEST_CODE_CHOOSE);
                 break;
             case R.id.selected_picture_iv_export:
+                //设备管理器
+                UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
+                //获取U盘存储设备
+                storageDevices = UsbMassStorageDevice.getMassStorageDevices(this);
                 try {
-                    UsbFile root = currentFs.getRootDirectory();
-                    // 在 U 盘中创建文件夹
-                    UsbFile newDir = root.createDirectory("heroHaoz");
-                    SavePictureUtil.savePictureToUsb(newDir);
-                    Toast.makeText(this, "写入成功", Toast.LENGTH_SHORT).show();
+                    if (storageDevices.length == 0) {
+                        showToastMsg("请插入 U 盘");
+                    } else {
+                        final UsbFile root = currentFs.getRootDirectory();
+                        DialogFragmentHelper.showConfirmDialog(getSupportFragmentManager(), "是否将图片导出到 U 盘",
+                                new IDialogResultListener<Integer>() {
+                                    @Override
+                                    public void onDataResult(Integer result) {
+                                        exportPictureToUsb(root);
+                                    }
+                                }, true, new CommonDialogFragment.OnDialogCancelListener() {
+                                    @Override
+                                    public void onCancel() {
+                                        showToastMsg("导出图片已取消");
+                                    }
+                                });
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -148,11 +184,33 @@ public class SelectedPictureActivity extends AppCompatActivity {
         }
     }
 
+    private void exportPictureToUsb(final UsbFile root){
+        mDialogFragment = DialogFragmentHelper.showProgress(getSupportFragmentManager(), "正在导出图片...", true,
+                new CommonDialogFragment.OnDialogCancelListener() {
+                    @Override
+                    public void onCancel() {
+                        showToastMsg("导出图片已取消");
+                    }
+                });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final UsbFile newDir = root.createDirectory("CK" + System.currentTimeMillis());
+                    SavePictureUtil.savePictureToUsb(SelectedPictureActivity.this, newDir);
+                    EventBus.getDefault().post(new UsbFileEvent());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
     /**
      * OTG 广播注册
      */
     private void registerUDiskReceiver() {
-        // 监听otg插入 拔出
+        // 监听 otg 插入 拔出
         IntentFilter usbDeviceStateFilter = new IntentFilter();
         usbDeviceStateFilter.addAction(UsbManager.ACTION_USB_DEVICE_ATTACHED);
         usbDeviceStateFilter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED);
@@ -200,7 +258,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
             }
         }
         if (storageDevices.length == 0) {
-            showToastMsg("请插入可用的U盘");
+            showToastMsg("请插入可用的 U 盘");
         }
     }
 
@@ -225,36 +283,28 @@ public class SelectedPictureActivity extends AppCompatActivity {
                             //用户已授权，可以进行读取操作
                             readDevice(getUsbMass(usbDevice));
                         } else {
-                            showToastMsg("没有插入U盘");
+                            showToastMsg("没有插入 U 盘");
                         }
                     } else {
-                        showToastMsg("未获取到U盘权限");
+                        showToastMsg("未获取到 U 盘权限");
                     }
                     break;
                 // 接收到 U 盘设备插入广播
                 case UsbManager.ACTION_USB_DEVICE_ATTACHED:
+                    showToastMsg("U 盘已插入");
                     UsbDevice device_add = intent.getParcelableExtra(UsbManager.EXTRA_DEVICE);
                     if (device_add != null) {
-                        //接收到U盘插入广播，尝试读取U盘设备数据
+                        //接收到 U 盘插入广播，尝试读取 U 盘设备数据
                         redUDiskDevsList();
                     }
-                    gets(Uri.parse("ss"));
                     break;
-                // 接收到U盘设设备拔出广播
+                // 接收到 U 盘设设备拔出广播
                 case UsbManager.ACTION_USB_DEVICE_DETACHED:
-                    showToastMsg("U盘已拔出");
-                    break;
-                case Intent.ACTION_MEDIA_MOUNTED:
-                    String usbPath = intent.getData().getPath();
-                    Log.d(TAG, "mounted" + usbPath);
+                    showToastMsg("U 盘已拔出");
                     break;
             }
         }
     };
-
-    private void gets(Uri uri) {
-
-    }
 
     private UsbMassStorageDevice getUsbMass(UsbDevice usbDevice) {
         for (UsbMassStorageDevice device : storageDevices) {
@@ -269,6 +319,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mOtgReceiver);
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -289,5 +340,15 @@ public class SelectedPictureActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(UsbFileEvent event) {
+        if (mDialogFragment != null) {
+            mDialogFragment.dismiss();
+            showToastMsg("图片导入成功");
+        }
+    }
+
+    ;
 
 }
