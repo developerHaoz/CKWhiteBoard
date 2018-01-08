@@ -15,7 +15,7 @@ public class PasswordManager {
     private static final String KEY_SETTINGS_PASSWORD = "settings_password";
     private static final String KEY_PICTURE_PASSWORD = "picture_password";
     private static final String KEY_COMMON_PASSWORD = "common_password";
-    private static final String COMMON_PASSWORD = "shishida666sid";
+    private static final String COMMON_PASSWORD = "admin";
 
     private volatile static PasswordManager sInstance;
     private Context mContext;

@@ -28,7 +28,6 @@ import com.example.developerhaoz.ckwhiteboard.common.img.dialog.CommonDialogFrag
 import com.example.developerhaoz.ckwhiteboard.common.img.dialog.DialogFragmentHelper;
 import com.example.developerhaoz.ckwhiteboard.common.img.dialog.IDialogResultListener;
 import com.example.developerhaoz.ckwhiteboard.common.util.SavePictureUtil;
-import com.example.developerhaoz.ckwhiteboard.common.util.UsbFileEvent;
 import com.example.developerhaoz.ckwhiteboard.view.adapter.SelectedPictureAdapter;
 import com.github.mjdev.libaums.UsbMassStorageDevice;
 import com.github.mjdev.libaums.fs.FileSystem;
@@ -38,9 +37,6 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 import org.litepal.crud.DataSupport;
 
 import java.io.IOException;
@@ -94,6 +90,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
 
     private DialogFragment mDialogFragment;
+    private static final String TAG = "SelectedPicture11111";
 
     public static void startActivity(Context context) {
         Intent intent = new Intent(context, SelectedPictureActivity.class);
@@ -115,12 +112,6 @@ public class SelectedPictureActivity extends AppCompatActivity {
             photoUrlList.add(pictureBeanList.get(i).getPicturePath());
         }
         initPhotoWall(photoUrlList);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        EventBus.getDefault().register(this);
     }
 
     private void initPhotoWall(List<String> photoUrlList) {
@@ -152,20 +143,25 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         .forResult(REQUEST_CODE_CHOOSE);
                 break;
             case R.id.selected_picture_iv_export:
+                redUDiskDevsList();
                 //设备管理器
                 UsbManager usbManager = (UsbManager) getSystemService(Context.USB_SERVICE);
                 //获取U盘存储设备
                 storageDevices = UsbMassStorageDevice.getMassStorageDevices(this);
                 try {
                     if (storageDevices.length == 0) {
-                        showToastMsg("请插入 U 盘");
                     } else {
                         final UsbFile root = currentFs.getRootDirectory();
                         DialogFragmentHelper.showConfirmDialog(getSupportFragmentManager(), "是否将图片导出到 U 盘",
                                 new IDialogResultListener<Integer>() {
                                     @Override
                                     public void onDataResult(Integer result) {
-                                        exportPictureToUsb(root);
+                                        if(RESULT_OK == result){
+                                            exportPictureToUsb(root);
+                                        }else{
+                                            showToastMsg("导出图片已取消");
+                                        }
+
                                     }
                                 }, true, new CommonDialogFragment.OnDialogCancelListener() {
                                     @Override
@@ -198,7 +194,15 @@ public class SelectedPictureActivity extends AppCompatActivity {
                 try {
                     final UsbFile newDir = root.createDirectory("CK" + System.currentTimeMillis());
                     SavePictureUtil.savePictureToUsb(SelectedPictureActivity.this, newDir);
-                    EventBus.getDefault().post(new UsbFileEvent());
+                    SelectedPictureActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mDialogFragment != null) {
+                                mDialogFragment.dismiss();
+                                showToastMsg("图片导入成功");
+                            }
+                        }
+                    });
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -319,7 +323,6 @@ public class SelectedPictureActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mOtgReceiver);
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -340,15 +343,5 @@ public class SelectedPictureActivity extends AppCompatActivity {
             }
         }
     }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(UsbFileEvent event) {
-        if (mDialogFragment != null) {
-            mDialogFragment.dismiss();
-            showToastMsg("图片导入成功");
-        }
-    }
-
-    ;
 
 }

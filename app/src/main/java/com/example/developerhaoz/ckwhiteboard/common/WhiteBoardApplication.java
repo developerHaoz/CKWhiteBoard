@@ -14,7 +14,7 @@ import org.litepal.LitePalApplication;
 public class WhiteBoardApplication extends LitePalApplication {
 
     private  static WhiteBoardApplication sInstance;
-    private static final String COMMON_PASSWORD = "shishida666sid";
+    private static final String COMMON_PASSWORD = "admin";
 
     @Override
     public void onCreate() {

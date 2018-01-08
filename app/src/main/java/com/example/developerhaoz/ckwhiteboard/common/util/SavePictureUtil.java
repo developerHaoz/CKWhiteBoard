@@ -16,9 +16,7 @@ import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
 import com.example.developerhaoz.ckwhiteboard.common.WhiteBoardApplication;
 import com.github.mjdev.libaums.fs.UsbFile;
 import com.github.mjdev.libaums.fs.UsbFileOutputStream;
-
 import org.litepal.crud.DataSupport;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
