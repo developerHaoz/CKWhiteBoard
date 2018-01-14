@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CKWhiteBoard</string>
+    <string name="app_name">广工创客点赞签字</string>
     <string name="GREAT">点个赞吧</string>
     <string name="TeamName">团队名称</string>
     <string name="ChangePassword">修改密码</string>
@@ -13,10 +13,10 @@
     <string name="ReEvaluate">重签</string>
     <string name="Evaluation">评语：</string>
     <string name="TeamIntroduceTemp">团队简介：如果你无法简洁的表达你的想法，那只说明你不够了解它。</string>
-    <string name="Encourage">评语：项目很好，继续加油。</string>
+    <string name="Encourage">评语：项目很好，团队很棒。</string>
     <string name="Time">2017-07-12 20:14:57</string>
     <string name="ChooseEvaluation">选择评语：</string>
-    <string name="Ok">项目很好，继续加油</string>
+    <string name="Ok">项目很好，团队很棒</string>
     <string name="InputTeamName">请输入团队名称</string>
     <string name="Preview">预览</string>
     <string name="Photo">主界面照片墙的照片</string>
@@ -29,5 +29,8 @@
     <string name="Settings">设置</string>
     <string name="Time_5S">5 S</string>
     <string name="save">保存</string>
+    <string name="photowall">相册</string>
+    <string name="delete">删除</string>
+    <string name="import_photo">导入</string>
 
 </resources>

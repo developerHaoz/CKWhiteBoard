@@ -106,20 +106,20 @@ public class SignatureActivity extends AppCompatActivity {
             mEvaluationDialog = new AlertDialog.Builder(this)
                     .setTitle("请选择评语")
                     .setSingleChoiceItems(
-                            new String[]{"项目很好继续加油", "项目技术含量很高", "团队人员都很出色"
+                            new String[]{"项目很好，团队很棒", "项目不错，加油努力", "同学们仍需努力，做的更好"
                             }, 0,
                             new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which + 1) {
                                         case 1:
-                                            mTvEvaluation.setText("项目很好继续加油");
+                                            mTvEvaluation.setText("项目很好，团队很棒");
                                             break;
                                         case 2:
-                                            mTvEvaluation.setText("项目技术含量很高");
+                                            mTvEvaluation.setText("项目不错，加油努力");
                                             break;
                                         case 3:
-                                            mTvEvaluation.setText("团队人员都很出色");
+                                            mTvEvaluation.setText("同学们仍需努力，做的更好");
                                             break;
                                         default:
                                             break;

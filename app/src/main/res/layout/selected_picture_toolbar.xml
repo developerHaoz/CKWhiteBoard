@@ -1,43 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="72dp"
                 android:background="@color/toolbar"
                 android:orientation="horizontal"
-                android:paddingTop="4dp"
     >
 
     <ImageView
         android:id="@+id/selected_picture_iv_back"
         android:contentDescription="@string/Back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:src="@drawable/back"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
         />
 
-    <ImageView
-        android:id="@+id/selected_picture_iv_import"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="48dp"
-        android:layout_marginRight="16dp"
-        android:contentDescription="@string/SelectedImage"
-        android:foregroundGravity="center_vertical"
-        android:src="@drawable/import_picture"
-        android:layout_alignTop="@+id/selected_picture_iv_back"
-        android:layout_alignParentEnd="true"/>
+    <LinearLayout
+        android:id="@+id/selected_picture_ll_import"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_toStartOf="@+id/selected_picture_ll_delete"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
 
-    <ImageView
-        android:id="@+id/selected_picture_iv_export"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:src="@drawable/export_picture"
-        android:layout_alignTop="@+id/selected_picture_iv_import"
+        <ImageView
+            android:id="@+id/selected_picture_iv_import"
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginRight="24dp"
+            android:layout_toLeftOf="@+id/selected_picture_iv_delete"
+            android:layout_toStartOf="@+id/selected_picture_iv_delete"
+            android:contentDescription="@string/SelectedImage"
+            android:foregroundGravity="center_vertical"
+            android:src="@drawable/import_picture"
+            android:layout_alignTop="@+id/selected_picture_iv_back"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:layout_marginRight="4dp"
+            android:gravity="center"
+            android:text="@string/import_photo"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/selected_picture_ll_delete"
+        android:layout_width="36dp"
+        android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="16dp"/>
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:orientation="vertical"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/selected_picture_iv_delete"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/delete"
+            android:layout_alignTop="@+id/selected_picture_iv_import"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="2dp"
+            android:gravity="center"
+            android:text="@string/delete"
+            android:textSize="16sp"
+            />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView"

@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="48dp"
+              android:layout_height="72dp"
               android:orientation="horizontal"
-              android:paddingLeft="16dp"
-              android:paddingStart="16dp"
-              android:paddingRight="16dp"
-              android:paddingEnd="16dp"
+              android:paddingLeft="24dp"
+              android:paddingStart="24dp"
+              android:paddingRight="32dp"
+              android:paddingEnd="32dp"
               android:background="@color/toolbar"
     >
 
     <ImageView
         android:contentDescription="@string/Back"
         android:id="@+id/toolbar_iv_back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:src="@drawable/back"
         android:layout_gravity="center_vertical"
         />
@@ -28,8 +28,8 @@
     <ImageView
         android:contentDescription="@string/Confirm"
         android:id="@+id/toolbar_iv_confirm"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:src="@drawable/confirm"
         android:layout_gravity="center_vertical"
         />

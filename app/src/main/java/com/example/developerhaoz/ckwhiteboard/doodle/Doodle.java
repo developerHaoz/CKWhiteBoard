@@ -200,6 +200,17 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
         SavePictureUtil.savePicByPNG(doodle.getBitmap(), path);
         return path;
     }
+    
+    public static void deleteAllFiles(){
+        String photoDirectoryPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/doodle";
+        File root = new File(photoDirectoryPath);
+        File[] files = root.listFiles();
+        if(files != null){
+            for (File file : files) {
+                file.delete();
+            }
+        }
+    }
 
     public void doDraw(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);

@@ -125,13 +125,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @OnClick({R.id.main_iv_photo, R.id.main_iv_settings, R.id.main_iv_great})
+    @OnClick({R.id.main_ll_photo, R.id.main_ll_settings, R.id.main_iv_great})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.main_iv_photo:
+            case R.id.main_ll_photo:
                 doSelectedPicture();
                 break;
-            case R.id.main_iv_settings:
+            case R.id.main_ll_settings:
                 doSettings();
                 break;
             case R.id.main_iv_great:

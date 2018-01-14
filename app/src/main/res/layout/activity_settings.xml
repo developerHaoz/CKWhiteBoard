@@ -19,12 +19,12 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:paddingEnd="2dp"
             android:paddingLeft="20dp"
             android:paddingRight="2dp"
             android:paddingStart="20dp"
             android:text="@string/TeamName"
-            android:textSize="14sp"
-            android:paddingEnd="2dp"
+            android:textSize="16sp"
             />
 
         <EditText
@@ -55,7 +55,7 @@
             android:paddingLeft="20dp"
             android:paddingStart="20dp"
             android:text="@string/TeamIntroduce"
-            android:textSize="14sp"
+            android:textSize="16sp"
             />
 
         <EditText
@@ -87,7 +87,7 @@
             android:paddingRight="2dp"
             android:paddingStart="20dp"
             android:text="@string/logo"
-            android:textSize="14sp"/>
+            android:textSize="16sp"/>
 
         <ImageView
             android:id="@+id/settings_iv_team_logo"
@@ -118,7 +118,7 @@
             android:paddingRight="2dp"
             android:paddingStart="20dp"
             android:text="@string/ChangePassword"
-            android:textSize="14sp"
+            android:textSize="16sp"
             />
 
         <EditText
@@ -129,7 +129,7 @@
             android:layout_weight="1"
             android:background="@null"
             android:inputType="textPassword"
-            android:textSize="12sp"
+            android:textSize="16sp"
             />
 
     </LinearLayout>
