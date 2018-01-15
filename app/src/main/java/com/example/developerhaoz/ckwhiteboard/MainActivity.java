@@ -117,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
                 mPhotoUrlList.add(pictureBean.getPicturePath());
             }
             Collections.reverse(mPhotoUrlList);
-        } else {
-            String imageUrl = "http://upload-images.jianshu.io/upload_images/4334738-118cfc403b6aca43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240";
-            for (int i = 0; i < 15; i++) {
-                mPhotoUrlList.add(imageUrl);
-            }
         }
     }
 

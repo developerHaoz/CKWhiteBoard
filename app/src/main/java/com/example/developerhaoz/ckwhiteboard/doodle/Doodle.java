@@ -212,6 +212,15 @@ public class Doodle extends SurfaceView implements SurfaceHolder.Callback {
         }
     }
 
+    public static void deleteFiles(List<String> mPathList){
+        for (String s : mPathList) {
+            File file = new File(s);
+            if(file.exists()){
+                file.delete();
+            }
+        }
+    }
+
     public void doDraw(Canvas canvas) {
         canvas.drawColor(Color.TRANSPARENT);
         for (Action a : mActions) {

@@ -5,16 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.example.developerhaoz.ckwhiteboard.R;
+import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
 import com.example.developerhaoz.ckwhiteboard.common.util.Check;
 import com.example.developerhaoz.ckwhiteboard.view.activity.DetailPhotoActivity;
+import com.example.developerhaoz.ckwhiteboard.view.widget.CheckView;
 
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -25,18 +28,17 @@ import java.util.List;
 
 public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPictureAdapter.SelectedPictureViewHolder> {
 
-    private List<String> mPhotoUrlList;
+    private List<PictureBean> mPictureBeanList;
     private WeakReference<Activity> mActivityWeakReference;
     private OnSelectedCallback mOnSelectedCallback;
+    public HashMap<Integer, Boolean> mCheckMap = new HashMap<>();
+    private HashMap<Integer, Integer> mReflectMap = new HashMap<>();
+    public static List<PictureInt> mCheckIdList = new ArrayList<>();
+    public static List<String> mCheckPathList = new ArrayList<>();
 
-    /**
-     * 标识 ImageButton 是否被勾选
-     */
-    private boolean isCheck;
-
-    public SelectedPictureAdapter(Activity activity, List<String> photoUrlList){
+    public SelectedPictureAdapter(Activity activity, List<PictureBean> photoUrlList){
         this.mActivityWeakReference = new WeakReference<>(activity);
-        this.mPhotoUrlList = photoUrlList;
+        this.mPictureBeanList = photoUrlList;
     }
 
     @Override
@@ -47,7 +49,7 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
 
     @Override
     public void onBindViewHolder(final SelectedPictureViewHolder holder, final int position) {
-        final String photoUrl = mPhotoUrlList.get(position);
+        final String photoUrl = mPictureBeanList.get(position).getPicturePath();
         Glide.with(mActivityWeakReference.get())
                 .load(photoUrl)
                 .asBitmap()
@@ -63,29 +65,38 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
             @Override
             public void onClick(View v) {
                 final Activity activity = mActivityWeakReference.get();
-                DetailPhotoActivity.startActivity(mPhotoUrlList.get(position), activity);
-            }
-        });
-
-        holder.mIbCheckable.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isCheck) {
-                    holder.mIbCheckable.setImageResource(R.drawable.pictures_selected);
-                    isCheck = true;
-                }else {
-                    holder.mIbCheckable.setImageResource(R.drawable.picture_unselected);
-                    isCheck = false;
-                }
+                DetailPhotoActivity.startActivity(mPictureBeanList.get(position).getPicturePath(), activity);
             }
         });
 
         holder.mIvPhoto.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                holder.mIbCheckable.setVisibility(View.VISIBLE);
-//                mOnSelectedCallback.onLongClick();
                 return true;
+            }
+        });
+
+        holder.mCvCheckable.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureBean pictureBean = mPictureBeanList.get(position);
+                PictureInt pictureInt = new PictureInt(pictureBean.getId());
+                if (!mCheckMap.containsKey(position)){
+                    mCheckMap.put(position, true);
+                    mCheckIdList.add(pictureInt);
+                    mReflectMap.put(position, mCheckIdList.size() - 1);
+                    mCheckPathList.add(pictureBean.getPicturePath());
+                    holder.mCvCheckable.setChecked(true);
+                }else{
+                    mCheckMap.remove(position);
+                    try{
+                        mCheckIdList.remove(mReflectMap.get(position));
+                        mCheckPathList.remove(position);
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    holder.mCvCheckable.setChecked(false);
+                }
             }
         });
     }
@@ -96,8 +107,8 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
 
     @Override
     public int getItemCount() {
-        if(!Check.isEmpty(mPhotoUrlList)){
-            return mPhotoUrlList.size();
+        if(!Check.isEmpty(mPictureBeanList)){
+            return mPictureBeanList.size();
         }
         return 0;
     }
@@ -105,16 +116,32 @@ public class SelectedPictureAdapter extends RecyclerView.Adapter<SelectedPicture
     static class SelectedPictureViewHolder extends RecyclerView.ViewHolder{
 
         private ImageView mIvPhoto;
-        private ImageButton mIbCheckable;
+        private CheckView mCvCheckable;
 
         public SelectedPictureViewHolder(View itemView) {
             super(itemView);
             mIvPhoto = (ImageView) itemView.findViewById(R.id.selected_picture_iv_photo);
-            mIbCheckable = (ImageButton) itemView.findViewById(R.id.selected_picture_ib_checkable);
+            mCvCheckable = (CheckView) itemView.findViewById(R.id.selected_picture_cv_check);
         }
     }
 
     public interface OnSelectedCallback{
         void onLongClick();
+    }
+
+   public static class PictureInt{
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public PictureInt(int id) {
+            this.id = id;
+        }
+
+        int id;
     }
 }

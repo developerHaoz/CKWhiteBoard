@@ -15,17 +15,19 @@
         android:scaleType="centerCrop"
         />
 
-    <ImageButton
-        android:id="@+id/selected_picture_ib_checkable"
+    <FrameLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginEnd="3dp"
-        android:layout_marginTop="3dp"
-        android:background="@null"
-        android:src="@drawable/picture_unselected"
-        android:visibility="gone"
-        />
+        android:layout_alignParentRight="true"
+        android:layout_margin="8dp"
+        android:fitsSystemWindows="true">
+
+        <com.example.developerhaoz.ckwhiteboard.view.widget.CheckView
+            android:id="@+id/selected_picture_cv_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            />
+    </FrameLayout>
 
 </RelativeLayout>

@@ -61,9 +61,9 @@ public class SelectedPictureActivity extends AppCompatActivity {
     ProgressBar mProgress;
 
     /**
-     * 保存所有图片的 path
+     * 保存所有图片实体类
      */
-    private List<String> mPhotoUrlList = new ArrayList<>();
+    private List<PictureBean> mPictureBeanList = new ArrayList<>();
 
     private DialogFragment mDialogFragment;
     private SelectedPictureAdapter mAdapter;
@@ -78,19 +78,26 @@ public class SelectedPictureActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selected_picture);
         ButterKnife.bind(this);
+        initPhotoWall();
+    }
+
+    private void initPhotoWall() {
         /**
          * 数据库用的是郭霖的 LitePal，以下是获取所有图片实体类的方法
          */
-        List<PictureBean> pictureBeanList = DataSupport.findAll(PictureBean.class);
-        for (int i = 0; i < pictureBeanList.size(); i++) {
-            mPhotoUrlList.add(pictureBeanList.get(i).getPicturePath());
+        List<PictureBean> mTempList = DataSupport.findAll(PictureBean.class);
+        mPictureBeanList.clear();
+        for (int i = mTempList.size() - 1; i >= 0; i--) {
+            mPictureBeanList.add(mTempList.get(i));
         }
-        initPhotoWall(mPhotoUrlList);
-    }
-
-    private void initPhotoWall(List<String> photoUrlList) {
-        mAdapter = new SelectedPictureAdapter(this, photoUrlList);
+        mAdapter = new SelectedPictureAdapter(this, mPictureBeanList);
         mRvShowPhotoWall.setLayoutManager(new GridLayoutManager(this, 4));
+        mAdapter.setOnLongListener(new SelectedPictureAdapter.OnSelectedCallback() {
+            @Override
+            public void onLongClick() {
+
+            }
+        });
         mRvShowPhotoWall.setAdapter(mAdapter);
     }
 
@@ -111,14 +118,27 @@ public class SelectedPictureActivity extends AppCompatActivity {
                         .forResult(REQUEST_CODE_CHOOSE);
                 break;
             case R.id.selected_picture_ll_delete:
-                DialogFragmentHelper.showConfirmDialog(getSupportFragmentManager(), "是否删除所有图片？", new IDialogResultListener<Integer>() {
+                DialogFragmentHelper.showConfirmDialog(getSupportFragmentManager(), "是否所选图片？", new IDialogResultListener<Integer>() {
                     @Override
                     public void onDataResult(Integer result) {
                         if(result == RESULT_OK){
-                            Doodle.deleteAllFiles();
-                            DataSupport.deleteAll(PictureBean.class);
-                            mPhotoUrlList.clear();
-                            mAdapter.notifyDataSetChanged();
+                            List<SelectedPictureAdapter.PictureInt> mCheckBeanList = SelectedPictureAdapter.mCheckIdList;
+                            List<Integer> mCheckIdList = new ArrayList<>();
+                            for (SelectedPictureAdapter.PictureInt anInt : mCheckBeanList) {
+                                mCheckIdList.add(anInt.getId());
+                            }
+                            Doodle.deleteFiles(SelectedPictureAdapter.mCheckPathList);
+                            for (Integer id : mCheckIdList) {
+                                DataSupport.delete(PictureBean.class, id);
+                            }
+                            List<PictureBean> mTempList = DataSupport.findAll(PictureBean.class);
+                            mPictureBeanList.clear();
+                            for (int i = mTempList.size() - 1; i >= 0; i--) {
+                                mPictureBeanList.add(mTempList.get(i));
+                            }
+                            mAdapter = new SelectedPictureAdapter(SelectedPictureActivity.this, mPictureBeanList);
+                            mRvShowPhotoWall.setLayoutManager(new GridLayoutManager(SelectedPictureActivity.this, 4));
+                            mRvShowPhotoWall.setAdapter(mAdapter);
                             showToast("图片删除成功");
                         }else{
                             showToast("删除图片已取消");
