@@ -168,19 +168,25 @@ public class SelectedPictureActivity extends AppCompatActivity {
     @Override
     @NonNull
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_CODE_CHOOSE) {
-            if (data != null) {
-                List<Uri> imageUri = Matisse.obtainResult(data);
-                List<PictureBean> pictureBeanList = new ArrayList<>();
-                for (int i = 0; i < imageUri.size(); i++) {
-                    PictureBean pictureBean = new PictureBean();
-                    pictureBean.setPicturePath(String.valueOf(imageUri.get(i)));
-                    pictureBeanList.add(pictureBean);
+        try{
+            if (requestCode == REQUEST_CODE_CHOOSE) {
+                if (data != null) {
+                    List<Uri> imageUri = Matisse.obtainResult(data);
+                    List<PictureBean> pictureBeanList = new ArrayList<>();
+                    for (int i = 0; i < imageUri.size(); i++) {
+                        PictureBean pictureBean = new PictureBean();
+                        pictureBean.setPicturePath(String.valueOf(imageUri.get(i)));
+                        pictureBeanList.add(pictureBean);
+                        mPictureBeanList.add(pictureBean);
+                    }
+                    DataSupport.saveAll(pictureBeanList);
+                    mAdapter = new SelectedPictureAdapter(this, mPictureBeanList);
+                    mRvShowPhotoWall.setLayoutManager(new GridLayoutManager(this, 4));
+                    mRvShowPhotoWall.setAdapter(mAdapter);
                 }
-                DataSupport.saveAll(pictureBeanList);
-                startActivity(this);
-                finish();
             }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

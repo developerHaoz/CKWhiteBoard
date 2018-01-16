@@ -4,7 +4,7 @@
     <string name="TeamName">团队名称</string>
     <string name="ChangePassword">修改密码</string>
     <string name="logo">团队 Logo</string>
-    <string name="TeamIntroduce">团队简介: </string>
+    <string name="TeamIntroduce">团队简介 </string>
     <string name="Color">颜色</string>
     <string name="Paint">画笔</string>
     <string name="Eraser">橡皮</string>
