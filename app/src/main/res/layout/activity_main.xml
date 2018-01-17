@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/settings_background"
+    android:background="@color/white"
     android:orientation="vertical"
     >
 
@@ -61,7 +61,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="3dp"
         android:background="@color/deep_gray"
         android:contentDescription="@string/AppDivide"
         />
@@ -94,7 +94,7 @@
             android:paddingStart="2dp">
 
             <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-                       android:layout_width="1dp"
+                       android:layout_width="3dp"
                        android:layout_height="match_parent"
                        android:layout_gravity="center"
                        android:layout_marginBottom="8dp"
@@ -126,8 +126,7 @@
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="@string/GREAT"
-                android:textColor="@color/encourage_text"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 />
         </RelativeLayout>
     </LinearLayout>

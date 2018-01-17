@@ -103,16 +103,17 @@ public class SettingsActivity extends AppCompatActivity {
         teamManager.setTeamPassword(teamPassword);
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE_CHOOSE) {
-            Uri imageUri = Matisse.obtainResult(data).get(0);
-            Glide.with(SettingsActivity.this)
-                    .load(imageUri)
-                    .into(mIvTeamLogo);
-            teamManager.setTeamLogoUrl(String.valueOf(imageUri));
+            if(data != null){
+                Uri imageUri = Matisse.obtainResult(data).get(0);
+                Glide.with(SettingsActivity.this)
+                        .load(imageUri)
+                        .into(mIvTeamLogo);
+                teamManager.setTeamLogoUrl(String.valueOf(imageUri));
+            }
         }
     }
 
@@ -141,17 +142,3 @@ public class SettingsActivity extends AppCompatActivity {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

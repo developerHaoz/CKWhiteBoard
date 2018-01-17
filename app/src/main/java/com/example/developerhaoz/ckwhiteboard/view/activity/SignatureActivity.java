@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.developerhaoz.ckwhiteboard.R;
@@ -40,6 +41,8 @@ public class SignatureActivity extends AppCompatActivity {
     Button mBtnReevaluate;
     @BindView(R.id.signature_btn_confirm)
     Button mBtnConfirm;
+    @BindView(R.id.signature_rl)
+    RelativeLayout mRl;
 
     private AlertDialog mEvaluationDialog;
 
@@ -69,7 +72,8 @@ public class SignatureActivity extends AppCompatActivity {
     @OnClick({R.id.toolbar_iv_back,
             R.id.signature_tv_evaluation,
             R.id.signature_btn_reevaluate,
-            R.id.signature_btn_confirm})
+            R.id.signature_btn_confirm,
+            R.id.signature_rl})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_iv_back:

@@ -2,13 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/settings_background"
+              android:background="@color/white"
               android:orientation="vertical"
     >
 
     <include layout="@layout/part_toolbar"/>
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="64dp"
         android:gravity="center_vertical"
@@ -17,8 +18,7 @@
         android:paddingRight="16dp"
         android:paddingTop="8dp"
         android:text="@string/ChooseEvaluation"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp"/>
 
     <TextView
         android:id="@+id/signature_tv_evaluation"
@@ -42,11 +42,21 @@
     <ImageView
         android:contentDescription="@string/AppDivide"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="2dp"
         android:background="@color/deep_gray"
         />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="以下是签名区域"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        />
+
     <RelativeLayout
+        android:id="@+id/signature_rl"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -62,30 +72,30 @@
 
         <Button
             android:id="@+id/signature_btn_reevaluate"
-            android:layout_width="52dp"
-            android:layout_height="28dp"
+            android:layout_width="60dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="24dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="48dp"
+            android:layout_toStartOf="@+id/signature_btn_confirm"
             android:background="@drawable/shape_button_reevaluate"
             android:text="@string/ReEvaluate"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_marginBottom="24dp"
-            android:layout_alignParentBottom="true"
-            android:layout_toStartOf="@+id/signature_btn_confirm"
-            android:layout_marginEnd="16dp"/>
+            android:textSize="15sp"/>
 
         <Button
             android:id="@+id/signature_btn_confirm"
-            android:layout_width="52dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="32dp"
+            android:layout_width="60dp"
+            android:layout_height="32dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
             android:layout_marginBottom="24dp"
+            android:layout_marginEnd="32dp"
             android:background="@drawable/shape_button_confirm"
             android:text="@string/Confirm"
             android:textColor="@color/white"
-            android:textSize="14sp"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"/>
+            android:textSize="15sp"/>
 
     </RelativeLayout>
 

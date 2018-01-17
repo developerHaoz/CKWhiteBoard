@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
-
 import com.example.developerhaoz.ckwhiteboard.R;
 import com.example.developerhaoz.ckwhiteboard.bean.PictureBean;
 import com.example.developerhaoz.ckwhiteboard.common.img.dialog.CommonDialogFragment;
@@ -27,12 +26,9 @@ import com.example.developerhaoz.ckwhiteboard.view.adapter.SelectedPictureAdapte
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
-
 import org.litepal.crud.DataSupport;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -186,7 +182,7 @@ public class SelectedPictureActivity extends AppCompatActivity {
                 }
             }
         }catch (Exception e){
-            e.printStackTrace();
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
