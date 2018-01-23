@@ -107,10 +107,10 @@
 
             <ImageView
                 android:id="@+id/main_iv_great"
-                android:layout_width="88dp"
-                android:layout_height="88dp"
-                android:layout_centerVertical="true"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
                 android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
                 android:contentDescription="@string/Like"
                 android:src="@drawable/encourage"
@@ -118,15 +118,16 @@
 
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="80dp"
-                android:layout_height="20dp"
+                android:layout_width="96dp"
+                android:layout_height="wrap_content"
                 android:layout_alignLeft="@+id/main_iv_great"
                 android:layout_alignStart="@+id/main_iv_great"
                 android:layout_below="@+id/main_iv_great"
                 android:layout_marginTop="12dp"
                 android:gravity="center"
                 android:text="@string/GREAT"
-                android:textSize="16sp"
+                android:textColor="@color/red"
+                android:textSize="22sp"
                 />
         </RelativeLayout>
     </LinearLayout>

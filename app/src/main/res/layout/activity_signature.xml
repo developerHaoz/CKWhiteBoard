@@ -8,51 +8,63 @@
 
     <include layout="@layout/part_toolbar"/>
 
-    <TextView
-        android:id="@+id/textView3"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:gravity="center_vertical"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="8dp"
-        android:text="@string/ChooseEvaluation"
-        android:textSize="18sp"/>
+        android:orientation="horizontal"
+        android:background="#FFF1E9E9"
+        >
 
-    <TextView
-        android:id="@+id/signature_tv_evaluation"
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/app_button"
-        android:drawablePadding="5dp"
-        android:gravity="center_vertical"
-        android:paddingLeft="12dp"
-        android:paddingRight="12dp"
-        android:text="@string/Ok"
-        android:textSize="16sp"
-        />
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="4dp"
+            android:paddingTop="8dp"
+            android:text="@string/ChooseEvaluation"
+            android:textSize="18sp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="40dp"/>
+        <TextView
+            android:id="@+id/signature_tv_evaluation"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/app_button"
+            android:drawablePadding="5dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="@string/Ok"
+            android:textSize="16sp"
+            />
+
+
+    </LinearLayout>
+
 
     <ImageView
-        android:contentDescription="@string/AppDivide"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="@color/deep_gray"
+        android:contentDescription="@string/AppDivide"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="以下是签名区域"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:gravity="center"
-        android:layout_marginTop="16dp"
-        android:textSize="16sp"
+        android:text="以下是签名区域"
+        android:textColor="@color/red"
+        android:textSize="22sp"
+        android:background="#FFF1E9E9"
         />
 
     <RelativeLayout
@@ -72,8 +84,8 @@
 
         <Button
             android:id="@+id/signature_btn_reevaluate"
-            android:layout_width="60dp"
-            android:layout_height="32dp"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="24dp"
             android:layout_marginEnd="16dp"
@@ -82,12 +94,12 @@
             android:background="@drawable/shape_button_reevaluate"
             android:text="@string/ReEvaluate"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="22sp"/>
 
         <Button
             android:id="@+id/signature_btn_confirm"
-            android:layout_width="60dp"
-            android:layout_height="32dp"
+            android:layout_width="96dp"
+            android:layout_height="48dp"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="24dp"
@@ -95,7 +107,7 @@
             android:background="@drawable/shape_button_confirm"
             android:text="@string/Confirm"
             android:textColor="@color/white"
-            android:textSize="15sp"/>
+            android:textSize="22sp"/>
 
     </RelativeLayout>
 

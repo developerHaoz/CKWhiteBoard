@@ -63,9 +63,9 @@ public class PreviewActivity extends AppCompatActivity {
     private static final String TAG = "Preview111111";
 
     /**
-     * 进行 5s 倒计时保存图片
+     * 进行 3s 倒计时保存图片
      */
-    private CountDownTimer timer = new CountDownTimer(5000, 1000) {
+    private CountDownTimer timer = new CountDownTimer(3000, 1000) {
         @Override
         public void onTick(long millisUntilFinished) {
             String timeUnit = " S";
